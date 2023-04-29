@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useDispatch, useSelector } from "react-redux";
+import { test } from "./app/features/auth/authSlice";
+import { useEffect } from "react";
+import styled from "@emotion/styled";
+import { color, space, fontSize } from 'styled-system';
 
 function App() {
+
+  const dispatch = useDispatch();
+  const { auth } = useSelector(state => state.auth);
+
+  // useEffect(() => {
+  //   dispatch(test());
+  // }, [dispatch]);
+
+  const Button = styled.button`
+    ${color},
+    ${space},
+    ${fontSize}
+
+  `
+
+  const Box = Button.withComponent('div');
+
+ 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>What's Good</h1>
+      <div>
+        <Button
+        color={['potato', 'navy', 'black']}
+        bg="potato"
+        fontSize={['sm', 'lg']}
+        >Gang</Button>
+        <Box>box</Box>
+      </div>
     </div>
   );
 }
