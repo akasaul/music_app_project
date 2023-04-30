@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { test } from '../features/auth/authSlice';
+import { test } from '../../features/auth/authSlice';
 
 // Wroker function
 function* workAuth () {
@@ -14,7 +14,7 @@ function* workAuth () {
 
 // Authentication saga 
 function* authSaga() {
-  yield takeEvery('auth/test', workAuth)
+  yield takeEvery('auth/signUpRequest', workAuth)
 }
 
 export default authSaga;

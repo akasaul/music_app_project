@@ -2,12 +2,15 @@ import { Button } from "rebass";
 import styled from "@emotion/styled";
 import { buttonStyle, color, fontFamily, variant } from 'styled-system';
 
-const TextButton = ({btnText, onClick}) => {
+const TextButton = ({children, onClick}) => {
   const MyButton = styled(Button)`
   ${color}
   ${variant}
   ${buttonStyle}
   ${fontFamily}
+  &:hover {
+    text-decoration: underline;
+  }
 `;
   return (
       <MyButton
@@ -16,7 +19,7 @@ const TextButton = ({btnText, onClick}) => {
           onClick={onClick}
           // color='black'
         >
-          {btnText}
+          {children}
         </MyButton>
   )
 }

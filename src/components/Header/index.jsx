@@ -17,6 +17,19 @@ const Header = () => {
 
   const RightContainer = styled(Box)``;
 
+  // Toggle Login Page
+  const [isLogin, setIsLogin] = useState(false);
+
+  const onLogin = () => {
+    setIsOpen(true);
+    setIsLogin(true);
+  }
+
+  const onSignUp = () => {
+    setIsOpen(true);
+    setIsLogin(false);
+  }
+
   return (
     <Box
       display='flex'
@@ -56,11 +69,13 @@ const Header = () => {
 
       <Box
       >
-        <TextButton btnText={'Login'} onClick={() => setIsOpen(true)} />
-        <PrimaryButton btnText={'SignUp'} onClick={() => setIsOpen(true)} />
+        <TextButton onClick={onLogin}>
+          Login
+        </TextButton>
+        <PrimaryButton btnText={'SignUp'} onClick={onSignUp} />
       </Box> 
 
-        <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
+        <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />
     </Box>
   )
 }
