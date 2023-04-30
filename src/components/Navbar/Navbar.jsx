@@ -1,9 +1,9 @@
 import { Box } from "rebass";
-import BasicCard from "../BaseCard/BaseCard";
-import Header from '../Header/Header';
-import PlayListCard from "../PlaylistCard/PlayListCard";
-import SongCard from "../SongCard/SongCard";
-import BaseCard from "../BaseCard/BaseCard";
+import BasicCard from "../BaseCard";
+import Header from '../Header';
+import PlayListCard from "../PlaylistCard";
+import SongCard from "../SongCard";
+import BaseCard from "../BaseCard";
 
 const Navbar = () => {
 

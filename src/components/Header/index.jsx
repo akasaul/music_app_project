@@ -3,13 +3,17 @@ import { Box, Button, Heading } from "rebass";
 import {  MdOutlineNotifications, MdOutlineAlarm, MdOutlineSettings } from 'react-icons/md';
 import styled from '@emotion/styled';
 import { variant } from 'styled-system';
+import PrimaryButton from '../Buttons/PrimaryButton';
+import SecondaryButton from '../Buttons/SecondaryButton';
+import TextButton from '../Buttons/TextButton';
+import { useState } from 'react';
+import LoginModal from '../LoginModal';
 
 const Header = () => {
-  const  HeaderText = styled(Box)`
-  `;
-  const MyButton = styled(Button)`
-    ${variant}
-  `;
+  const  HeaderText = styled(Box)``;
+
+  // Modal State
+  const [isOpen, setIsOpen] = useState(false);
 
   const RightContainer = styled(Box)``;
 
@@ -31,7 +35,7 @@ const Header = () => {
         Good Morning
       </HeaderText>
 
-      <RightContainer
+      {/* <RightContainer
         display='flex'
         minWidth='130px'
         justifyContent='space-between'
@@ -48,17 +52,15 @@ const Header = () => {
           color='white'
           size={30}
         />
-      </RightContainer>
+      </RightContainer> */}
 
-      {/* <Box
+      <Box
       >
-        <MyButton
-          variant='primary'
-          color='black'
-        >
-          Sign Up
-        </MyButton>
-      </Box>  */}
+        <TextButton btnText={'Login'} onClick={() => setIsOpen(true)} />
+        <PrimaryButton btnText={'SignUp'} onClick={() => setIsOpen(true)} />
+      </Box> 
+
+        <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </Box>
   )
 }
