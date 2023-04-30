@@ -1,0 +1,21 @@
+/* .songCard {
+  transition: 0.25s ease all;
+  cursor: pointer;
+}
+
+.songCard:hover {
+} */
+
+.play_button:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  filter: brightness(105%);
+}
+
+@media (min-width: 600px) {
+  .songCard:hover >.play_button {
+    transition: all 500 ease;
+    opacity: 1;
+    display: grid;
+  }
+}
