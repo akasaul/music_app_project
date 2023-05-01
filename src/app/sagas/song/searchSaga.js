@@ -12,22 +12,21 @@ function* workSearch () {
 
     const options = {
       method: 'GET',
-      url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
+      url: process.env.REACT_APP_API_URL,
       params: {q: query},
       headers: {
-        'X-RapidAPI-Key': '729309ac6amshed43917df263014p14fa44jsn2cd2dddd3716',
-        'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com'
+        'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
+        'X-RapidAPI-Host': process.env.REACT_APP_API_HOST,
       }
     };
 
-    
     const res = yield call(() => axios.request(options));
 
     let formattedResponse = [];
 
     if(res.status === 200) {
       formattedResponse = res.data.data.filter(res => res.type === 'track');
-      formattedResponse = formattedResponse.slice(0, 5)
+      formattedResponse = formattedResponse.slice(0, 10)
       yield put(searchRequestSuccess(formattedResponse));    
     } else {
       throw Error('Failed to fetch');

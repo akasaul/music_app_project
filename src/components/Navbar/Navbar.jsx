@@ -11,23 +11,21 @@ const Navbar = () => {
     <Box
       as='nav'
       width='100%'
-      flex={['none', '1']}
+      // flex={['none', '1']}
     >
       <Header />
       {/* Navbar */}
-      <BasicCard />
 
 
-      <div style={{
+      {/* <div style={{
         display: 'flex',
         gap: '1rem'
 
-      }}>
+      }}> */}
         {/* <SongCard />
         <SongCard />
         <SongCard /> */}
-        <PlayListCard />
-      </div>
+      {/* </div> */}
     </Box>
   )
 }

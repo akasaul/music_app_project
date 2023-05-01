@@ -2,6 +2,8 @@ import { all } from 'redux-saga/effects';
 import signInSaga from './auth/signInSaga';
 // import authSaga from './authSaga';
 import signUpSaga from './auth/signUpSaga';
+import addSong from './song/addSongSaga';
+import fetchRecentSaga from './song/fetchRecentSaga';
 import searchSaga from './song/searchSaga';
 
 export default function* rootSaga() {
@@ -9,5 +11,7 @@ export default function* rootSaga() {
     signUpSaga(),
     signInSaga(),
     searchSaga(),
+    addSong(),
+    fetchRecentSaga(),
   ])
 }

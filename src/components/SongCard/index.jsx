@@ -33,6 +33,7 @@ const SongCard = () => {
       alignItems='center'
       flex='1'
       className='songCard'
+      minWidth={'150px'}
     >
       <Image 
         mr={[2, 3]}
@@ -53,8 +54,8 @@ const SongCard = () => {
 
 
         <PlayButton
-          width='50px'
-          height='50px'
+          width={['30px', '30px', '40px']}
+          height={['30px', '30px', '40px']}
           bg='secondary'
           display={['none']}
           className='play_button'

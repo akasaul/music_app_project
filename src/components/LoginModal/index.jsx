@@ -307,8 +307,6 @@ const Container = styled(Flex)`
             Continue
           </SubmitButton>
 
-
-
         </Container>
 
          {

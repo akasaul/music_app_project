@@ -1,5 +1,6 @@
 import NavBar from '../components/Navbar/Navbar';
 import { Box } from "rebass";
+import RecentSongs from '../components/RecentSongs/RecentSongs';
 
 const Home = () => {
   
@@ -7,8 +8,10 @@ const Home = () => {
     <Box
       display='flex'
       flex='1'
+      flexDirection='column'
     >
       <NavBar />
+      <RecentSongs />
     </Box>
   )
 }

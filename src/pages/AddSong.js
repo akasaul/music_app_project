@@ -1,10 +1,12 @@
-import { MdAdd, MdAlbum, MdCreate, MdFileUpload, MdMic, MdMusicNote, MdSearch, MdTimer } from 'react-icons/md'
+import { MdAdd, MdAlbum, MdCreate, MdFileUpload, MdLink, MdMic, MdMusicNote, MdSearch, MdTimer } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { Box, Container, Flex, Input, Text } from 'theme-ui';
+import { Box, Container, Flex, Image, Input, Spinner, Text } from 'theme-ui';
 import SubmitButton from '../components/Buttons/SubmitButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { reset, setQuery, searchRequest, setSearchQuery } from '../app/features/song/songSlice';
+import { reset, setQuery, searchRequest, setSearchQuery, setSong, addSongRequest } from '../app/features/song/songSlice';
+import SearchResult from '../components/SearchResult/SearchResult';
+import '../App.css';
 
 
 const AddSong = () => {
@@ -13,8 +15,9 @@ const AddSong = () => {
         title: '',
         artist: '',
         album: '',
-        genre: '',
+        genre: 'pop',
         duration: '',
+        imageUrl: '',
     });
 
     const [query, setQuery] = useState('');
@@ -25,26 +28,119 @@ const AddSong = () => {
             [e.target.name]: e.target.value
         })
 
-        console.log(formData);
     }
     
-    const {title, artist, album, genre, duration} = formData;
+    // generic form data 
+    const {title, artist, album, genre, duration, imageUrl} = formData;
     
-    const { songs } = useSelector(state => state.song);
-
-    const onSubmit = () => {};
-
-    console.log(query);
+    // States from song slice
+    const { songs, isLoading, isSuccess, isError, currentState } = useSelector(state => state.song);
 
 
     const dispatch = useDispatch();
 
-
+    // Search hadnler
     const handleSearch = (e) => {
-      console.log(e.target.value);
+      dispatch(reset());
       setQuery(e.target.value);
       dispatch(setSearchQuery(e.target.value));
       dispatch(searchRequest(query));
+    }
+
+    // General Error Object
+    const [errors, setErrors] = useState({
+      titleError: '', 
+      artistError: '',
+      albumError: '',
+      genreError: '',
+      durationError: '',
+      imageUrlError: ''
+    });
+
+    
+    // Utitlity for setting error values 
+    function setErrorVal(key, msg){
+
+      setErrors({
+        ...errors,
+        [key]: msg
+      })
+      
+    }
+
+    const { titleError, albumError, artistError, durationError, genreError, imageUrlError } = errors;
+
+    // Check for errors
+    const validate = () => {
+
+      // if(!title) {
+      //   setErrorVal('titleError', 'Title Can\'t be Empty');
+      //   throw Error('title error');
+      // } else {  
+      //   setErrorVal('artistError', '');
+      // }
+
+      // if(!artist) {
+      //   setErrorVal('artistError', 'Artist Can\'t be Empty');
+      //   throw Error('artist error');
+      // } else {
+      //   setErrorVal('artistError', '');
+      // }
+
+      // if(!album) {
+      //   setErrorVal('albumError', 'Album Can\'t be Empty');
+      //   throw Error('album error');
+      // } else {
+      //   setErrorVal('albumError', '');
+      // }
+
+      // if(!genre) {
+      //   setErrorVal('genreError', 'Genre Can\'t be Empty');
+      //   throw Error('genre error')
+      // } else {
+      //   setErrorVal('genreError', '');
+      // }
+
+      // if(!imageUrl) {
+      //   setErrorVal('imageUrlError', 'URL Can\'t be Empty');
+      //   throw Error('imageUrl error')
+      // }  
+      // else {
+      //   setErrorVal('imageUrlError', '');
+      // }
+
+      // if(!duration) {
+      //   setErrorVal('durationError', 'Duration Can\'t be Empty');
+      //   throw Error('duration error');
+      // }  
+
+      // else if(isNaN(duration)) {
+      //   setErrorVal('durationError', 'Duration Can only be a Number');
+      //   throw Error('duration error');
+      // }
+      // else {
+      //   setErrorVal('durationError', '');
+      // }
+
+    }
+
+
+    const onSubmit = (e) => {
+      e.preventDefault();
+      try {
+        validate();
+      } catch(err) {
+        console.log(err.message);
+      }
+      dispatch(reset());
+      dispatch(setSong(formData));
+      dispatch(addSongRequest());
+    };
+
+    const navigate = useNavigate();
+
+    if(isSuccess && currentState === 'ADD') {
+      navigate('/');  
     }
 
   return (
@@ -63,7 +159,7 @@ const AddSong = () => {
               marginBlock: '1rem',
             }}
           >
-              Add Song Automatically
+              Add Songs with Search
           </h2>
 
           <Container
@@ -72,7 +168,11 @@ const AddSong = () => {
                 sx={{
                   display: 'flex',
                   maxWidth: '500px', 
+                  position: 'relative',
+                  borderBottom: '10px solid #1ED760'
                 }}
+
+                className='search-result'
                 >
 
                 <Input 
@@ -88,6 +188,38 @@ const AddSong = () => {
                 color="white"
                 size={24} 
               /> 
+
+
+              {
+
+                  songs.length > 0 && query.length > 0 &&
+                  <Box 
+                    sx={{
+                      position: 'absolute',
+                      background: '#000',
+                      width: '100%',
+                      height: '150px',
+                      overflowY: 'scroll', 
+                      top: '40px',
+                      left: '0px',
+                      borderRadius: '4px',
+                    }}
+                  >
+                    {
+                      isLoading && !isSuccess ?
+                      <Spinner
+                        color='green'
+                      /> :
+                      songs.map(song => (
+                        <SearchResult key={song.id} title={song.title}
+                         imageUrl={song.album.cover_big} artist={song.artist.name}
+                          duration={song.duration} album={song.album.title} 
+                          setFormData={setFormData} formData={formData}
+                        />
+                      ))
+                    }
+                  </Box>
+              }
           </Container>            
 
       </Container>
@@ -101,7 +233,7 @@ const AddSong = () => {
             gap: '10px',
             flexDirection: 'column',
             marginInline: 'auto',
-            marginTop: '2rem'
+            marginTop: '9rem'
           }}
           >
 
@@ -136,7 +268,19 @@ const AddSong = () => {
                 color="white"
                 size={24} 
               /> 
+
           </Container>            
+            {
+              titleError &&
+              <Text
+                sx={{
+                  color: 'white',
+                  maxWidth: '500px',
+                  marginInline: 'auto',
+                  width: '100%',
+                }}
+              >{titleError}</Text>
+            }
 
           <Container
             bg='inputBg'
@@ -159,7 +303,19 @@ const AddSong = () => {
                 color="white"
                 size={24} 
               /> 
-          </Container>           
+          </Container>     
+
+            {
+              artistError &&
+              <Text
+                sx={{
+                  color: 'white',
+                  maxWidth: '500px',
+                  marginInline: 'auto',
+                  width: '100%',
+                }}
+              >{artistError}</Text>
+            }      
 
         <Container
             bg='inputBg'
@@ -183,7 +339,19 @@ const AddSong = () => {
                 size={24} 
               /> 
         </Container>         
-       
+        {
+              albumError &&
+              <Text
+                sx={{
+                  color: 'white',
+                  maxWidth: '500px',
+                  marginInline: 'auto',
+                  width: '100%',
+                }}
+              >{albumError}</Text>
+            }      
+
+
         <Container
               bg='inputBg'
               p='5px'
@@ -242,6 +410,52 @@ const AddSong = () => {
               
         </Container>      
 
+
+        <Container
+            bg='inputBg'
+            p='5px'
+            sx={{
+              display: 'flex',
+              maxWidth: '500px', 
+              flexDirection: 'column'
+            }}
+            >
+
+            <Flex
+              sx={{
+                alignItems: 'center'
+              }}
+            >
+              <Input 
+                value={imageUrl} onChange={onChange} name='imageUrl' type='url' 
+                placeholder='ImageUrl'
+                sx={{
+                  color: 'white',
+                  border: 'none', 
+                  outline: 'none',
+                }}
+              />
+                <MdLink 
+                color="white"
+                size={24} 
+              /> 
+            </Flex>
+
+            <Box>
+              {
+                imageUrl.length > 0 &&
+                <Image
+                  src={imageUrl}
+                  width='100%'
+                  sx={{
+                    borderRadius: '5px'
+                  }}
+                ></Image>
+              }
+            </Box>
+
+        </Container>      
+
         <Box
           sx={{
             maxWidth: '500px',
@@ -251,6 +465,12 @@ const AddSong = () => {
         >
           <SubmitButton>
             Add Song
+            {
+              isLoading && currentState === 'ADD' &&
+              <Spinner 
+                height='20px'
+              />
+            }
         </SubmitButton>
 
         </Box>

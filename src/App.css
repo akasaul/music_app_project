@@ -15,3 +15,13 @@ select:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px #323232 inset !important;
   -webkit-text-fill-color: white !important;
 }
+
+.search-result >  ::-webkit-scrollbar { 
+    display: none;  
+  }
+
+.search-result {
+  -ms-overflow-style: none; 
+    scrollbar-width: none;  
+}
+
