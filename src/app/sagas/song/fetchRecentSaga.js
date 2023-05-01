@@ -1,20 +1,22 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { fetchRecentFailure, fetchRecentSuccess } from '../../features/song/songSlice';
 import { db } from '../../../firebase/firebase';
-import { addDoc, collection, getDoc } from 'firebase/firestore';
-import { serverTimestamp } from 'firebase/firestore';
+import { collection, getDocs, limit, orderBy, query, where } from 'firebase/firestore';
 
 // Worker function
 function* workFetchRecent () {
   try {
 
-    const res = yield call(() => getDoc(collection(db, 'songs'), (songSnapShot) => {
-      console.log(songSnapShot);
-    }));
+    const q = query(collection(db, 'songs'), orderBy('timeStamp', 'desc'), limit(5));
+    const songsSnapshot = yield call(() => getDocs(q));
 
-    console.log(res);
+    let songs = [];
 
-    yield put(fetchRecentSuccess());    
+    songsSnapshot.forEach((doc) => {
+      songs.push({id: doc.id, ...doc.data()});
+    })
+
+    yield put(fetchRecentSuccess(songs));    
 
   } catch(err) {
     yield put(fetchRecentFailure(err.message));

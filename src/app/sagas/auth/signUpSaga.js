@@ -1,8 +1,9 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { test, signUpFalure, signUpRequest, signUpSuccess } from '../../features/auth/authSlice';
 
-import { auth } from '../../../firebase/firebase';
+import { auth, db } from '../../../firebase/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { addDoc, collection } from 'firebase/firestore';
 
 // Worker function
 function* workAuth () {
@@ -13,6 +14,14 @@ function* workAuth () {
 
     const user = yield call(() => updateProfile(res.user, {
       displayName: inputName
+    }));
+
+    console.log(res);
+
+    const response = yield call(() => addDoc(collection(db, 'users'), {
+      name: inputName, 
+      id: res.user.uid,
+      favorites: [],
     }));
 
     // const postsFormatted = yield posts.json();

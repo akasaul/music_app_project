@@ -9,7 +9,7 @@ import SearchResult from '../components/SearchResult/SearchResult';
 import '../App.css';
 
 
-const AddSong = () => {
+const AddSong = ({isEdit}) => {
 
     const [formData, setFormData] = useState({
         title: '',
@@ -149,6 +149,8 @@ const AddSong = () => {
         width: '100%'
       }}
     >
+      {
+        !isEdit &&
       <Container
         as='form'
       >
@@ -223,6 +225,7 @@ const AddSong = () => {
           </Container>            
 
       </Container>
+      }
 
         <Container 
           as='form'
@@ -244,7 +247,11 @@ const AddSong = () => {
               marginBlock: '1rem',
             }}
           >
-              Add Song Manually
+              {
+                isEdit ?
+                'Edit Song': 
+                'Add Song Manually' 
+              }
           </h2>
 
           <Container

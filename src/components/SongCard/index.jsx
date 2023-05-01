@@ -1,11 +1,19 @@
 import styled from "@emotion/styled";
 import { MdPlayArrow, MdPlayCircle } from "react-icons/md";
-import { Box, Button, Image, Text } from "rebass";
+import { useDispatch } from "react-redux";
+import { Box, Button, Flex, Image, Text } from "rebass";
 import { color, fontSize, fontWeight, grid } from "styled-system";
+import { playSong } from "../../app/features/song/songSlice";
 import './songCard.css';
 
-const SongCard = () => {
+const SongCard = ({artist, imageUrl, title}) => {
   const CardText = styled(Text)`
+    ${color}
+    ${fontSize}
+    ${fontWeight}
+    `;
+
+    const CardSubtitle = styled(Text)`
     ${color}
     ${fontSize}
     ${fontWeight}
@@ -26,51 +34,71 @@ const SongCard = () => {
     right: 1rem;
   `
 
+  const disptch = useDispatch();
+
+  const startPlay = () => {
+    disptch(playSong({title, artist, imageUrl}));
+  }
+
   return (
     <SongCardContainer
+      onClick={startPlay}
       bg='songCardBg'
       display='flex'
       alignItems='center'
       flex='1'
       className='songCard'
-      minWidth={'150px'}
+      minWidth={'150px'}      
     >
       <Image 
-        mr={[2, 3]}
-        src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-        height={['55px', '80px']}
-        width={['55px', '80px']}
+        mr={[2, 1, 3]}
+        src={imageUrl}
+        height={['55px', '55px', '80px']}
+        width={['55px', '55px', '80px']}
         sx={{
           objectFit: 'cover'
         }}
       />
-      <CardText
-        color='textPrimary'
-        fontSize={['xs', 'sm']}
-        fontWeight='semiBold'
+      <Flex
+        flexDirection='column'
       >
-        J.Cole
-      </CardText>
-
-
-        <PlayButton
-          width={['30px', '30px', '40px']}
-          height={['30px', '30px', '40px']}
-          bg='secondary'
-          display={['none']}
-          className='play_button'
-          
-          sx={{
-            opacity: 0,
-            placeContent: 'center',
-            boxShadow: '5px 5px 10px #000'
-          }}
+        <CardText
+          color='textPrimary'
+          fontSize={['xs', 'xs', 'xs', 'sm']}
+          fontWeight='semiBold'
         >
-          <MdPlayArrow 
-            color='black'
-            size={40} 
-          />
-        </PlayButton>
+          {artist}
+        </CardText>
+
+        <CardSubtitle
+          color='textSecondary'
+          fontSize={['xs', 'xs', 'xs']}
+          display={['none', 'none', 'block']}
+        >
+          {title}
+        </CardSubtitle>
+
+      </Flex>
+
+      <PlayButton
+        width={['30px', '30px', '40px']}
+        height={['30px', '30px', '40px']}
+        bg='secondary'
+        display={['none']}
+        className='play_button'
+        onClick={startPlay}
+        
+        sx={{
+          opacity: 0,
+          placeContent: 'center',
+          boxShadow: '5px 5px 10px #000'
+        }}
+      >
+        <MdPlayArrow 
+          color='black'
+          size={40} 
+        />
+      </PlayButton>
 
     </SongCardContainer>
   )

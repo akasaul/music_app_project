@@ -1,0 +1,17 @@
+.btn {
+  color: #B3B3B3;
+}
+
+.btn:hover {
+  color: #fff;
+  cursor: pointer;
+}
+
+.play_button {
+  color: white;
+}
+
+.play_button:hover {
+  transition: all 200ms ease-in-out;
+  transform: scale(110%);
+}

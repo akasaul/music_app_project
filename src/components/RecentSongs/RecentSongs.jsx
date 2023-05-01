@@ -1,16 +1,32 @@
 import styled from "@emotion/styled";
+import { useEffect } from "react";
 import { Box, Flex } from "rebass";
-import { Grid } from "theme-ui";
+import { Grid, Spinner } from "theme-ui";
 import SongCard from "../SongCard";
+import { fetchRecentRequest } from "../../app/features/song/songSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const RecentSongs = () => {
 
   const RecentGrid = styled(Grid)`
+
     grid-template-columns: repeat(2, 1fr);
-    @media (min-width: 900px) {
-    grid-template-columns: repeat(3, 1fr);
+
+    @media (min-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
     }
+
   `;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchRecentRequest());
+  }, [dispatch]);
+
+  const { recents, isLoading, isError, currentState  } = useSelector(state => state.song);
+
+  console.log(isLoading);
 
   return (
     <Flex
@@ -22,11 +38,29 @@ const RecentSongs = () => {
 
       <RecentGrid
       >
-        <SongCard />
-        <SongCard />
-        <SongCard />
-        <SongCard />
-        <SongCard />
+        {
+          isLoading && currentState === 'FETCH_RECENT' ?
+          <Box
+            height='100px'
+            width='100%'
+            sx={{
+              display: 'grid',
+              placeContent: 'center'
+            }}
+          >
+              <Spinner color='green' />
+          </Box>
+           : isError && currentState === 'FETCH_RECENT' ? 
+           <h5 
+            style={{
+              color: 'white'
+            }}
+           >An Error Occurred</h5>
+           :
+          recents?.map(recent => 
+            <SongCard artist={recent.artist} imageUrl={recent.imageUrl} title={recent.title} />
+            )
+        }
       </RecentGrid>
 
 

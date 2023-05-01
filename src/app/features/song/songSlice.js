@@ -5,13 +5,15 @@ const songSlice = createSlice({
   name: 'song',
   initialState: {
     songs: [],
+    recents: [],
     song: null,
     query: '',
     isLoading: false,
     isError: false,
     isSuccess: false,
     errorMsg: '',
-    currentState: ''
+    currentState: '',
+    isPlaying: false,
   },
   reducers: {
     searchRequest: (state, action) => {
@@ -58,12 +60,13 @@ const songSlice = createSlice({
 
     fetchRecentRequest: (state, action) => {
       state.isLoading = true;
-      state.currentState = 'FETCH';
+      state.currentState = 'FETCH_RECENT';
     },
 
     fetchRecentSuccess: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
+      state.recents = action.payload;
     },
 
     fetchRecentFailure: (state, action) => {
@@ -78,10 +81,21 @@ const songSlice = createSlice({
       state.isLoading = false;
       state.errorMsg = '';
       state.errorMsg = '';
+    },
+
+    playSong: (state, action) => {
+      state.isPlaying = true;
+      state.song = action.payload;
+    },
+
+    stopSong: (state, action) => {
+      state.isPlaying = false;
+      state.song = null;
     }
+
   },
 });
 
-export const { searchRequest, searchRequestFailure, setSearchQuery, searchRequestSuccess, reset, addSongFailure, addSongRequest, addSongSuccess, setSong, fetchRecentFailure, fetchRecentRequest, fetchRecentSuccess } = songSlice.actions;
+export const { searchRequest, searchRequestFailure, setSearchQuery, searchRequestSuccess, reset, addSongFailure, addSongRequest, addSongSuccess, setSong, fetchRecentFailure, fetchRecentRequest, fetchRecentSuccess, playSong, stopSong } = songSlice.actions;
 
 export default songSlice.reducer;

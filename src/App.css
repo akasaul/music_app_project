@@ -25,3 +25,9 @@ select:-webkit-autofill {
     scrollbar-width: none;  
 }
 
+@media (min-width: 600px) {
+  .home {
+    background: linear-gradient(#222222, #000);
+    padding: 10px;
+  }
+}

@@ -53,7 +53,7 @@ const Header = () => {
         fontWeight='semiBold'
         color='textPrimary'
       >
-        Good Morning
+        Good Day
       </HeaderText>
 
       {

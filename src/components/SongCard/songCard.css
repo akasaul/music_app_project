@@ -1,11 +1,11 @@
-/* .songCard {
+.songCard {
   transition: 0.25s ease all;
   cursor: pointer;
 }
 
 .songCard:hover {
-} */
-
+  filter: brightness(110%);
+} 
 
 .play_button:hover {
   cursor: pointer;

@@ -202,8 +202,8 @@ const Container = styled(Flex)`
     </Overlay>
     
       <Modal
-        left={['50px', '20%']}
-        right={['50px', '20%']}
+        left={['50px',   '50px', '20%']}
+        right={['50px', '50px', '20%']}
       >
         <Header
           as='header'
@@ -217,8 +217,8 @@ const Container = styled(Flex)`
         </Header>
 
         <HeaderText
-          maxWidth={['250px', '350px']}
-          fontSize={['24px', '32px']}
+          maxWidth={['250px', '250px', '350px']}
+          fontSize={['24px', '24px', '32px']}
         >
           Start listening with a free Nikofy account
         </HeaderText>
@@ -242,7 +242,7 @@ const Container = styled(Flex)`
                   placeholder={'Email'}
                   name={'email'}
                   variant='primary'
-                  fontSize={['xs', 'sm']}
+                  fontSize={['xs', 'xs', 'sm']}
                 />
                 <MdOutlineEmail 
                   size={28}
@@ -261,7 +261,7 @@ const Container = styled(Flex)`
                   placeholder={'What should we call you'}
                   name={'name'}
                   variant='primary'
-                  fontSize={['xs', 'sm']}
+                  fontSize={['xs', 'xs', 'sm']}
                 />
                 <MdOutlineAccountCircle 
                   size={28}
@@ -280,7 +280,7 @@ const Container = styled(Flex)`
               name={'password'}
               variant='primary'
               type={showPassword ? 'text' : 'password'}
-              fontSize={['xs', 'sm']}
+              fontSize={['xs', 'xs', 'sm']}
             />
             {
               showPassword ?
