@@ -1,5 +1,5 @@
 import styled from "@emotion/styled"
-import { MdHome, MdSearch } from "react-icons/md";
+import { MdAdd, MdFavorite, MdHome, MdLibraryMusic, MdSearch } from "react-icons/md";
 import { Box , Flex, Text} from "rebass"
 import { color } from "styled-system"
 import ListTile from '../ListTile';
@@ -20,9 +20,6 @@ const index = () => {
       width={['auto', '100px', '20%']}
       flexDirection='column'
       alignItems='center'
-      sx={{
-        gap: '10px',
-      }}
     >
 
     {/* Home and search container */}
@@ -31,10 +28,13 @@ const index = () => {
       py={'20px'}
       bg='sideBarBg'
       px={'20px'}
-      my={'10px'}
+      my={'5px'}
       alignItems={['', 'center', 'start']}
+      sx={{
+        gap: '10px'
+      }}
     >
-      <ListTile text={'Home'}>
+      <ListTile text={'Home'} link={'/'}>
         {/* display d/t Icon sizes at view ports */}
         <Box
           display={['none', 'block', 'none']}
@@ -56,7 +56,7 @@ const index = () => {
 
       </ListTile>
 
-      <ListTile text={'Search'}>
+      <ListTile text={'Search'} link={'/search'}>
         {/* display d/t Icon sizes at view ports */}
         <Box
             display={['none', 'block', 'none']}
@@ -77,6 +77,89 @@ const index = () => {
           </Box>
       </ListTile>
     </TopContainer>
+
+      {/* Library and Favorites */}
+    <TopContainer
+      flexDirection='column'
+      py={'20px'}
+      bg='sideBarBg'
+      px={'20px'}
+      my={'5px'}
+      height={'100%'}
+      alignItems={['', 'center', 'start']}
+      sx={{
+        gap: '10px'
+      }}
+    >
+      <ListTile text={'Favorites'} link={'/favorites'}>
+        {/* display d/t Icon sizes at view ports */}
+        <Box
+          display={['none', 'block', 'none']}
+        >
+          <MdFavorite
+              size={36}
+              color='#B3B3B3'
+            />
+        </Box>
+
+        <Box
+          display={['none', 'none', 'block']}
+        >
+          <MdFavorite
+              size={30}
+              color='#B3B3B3'
+            />
+        </Box>
+
+      </ListTile>
+
+      <ListTile text={'Library'} link={'/library'}>
+        {/* display d/t Icon sizes at view ports */}
+        <Box
+            display={['none', 'block', 'none']}
+          >
+            <MdLibraryMusic
+                size={36}
+                color='#B3B3B3'
+              />
+          </Box>
+
+          <Box
+            display={['none', 'none', 'block']}
+          >
+            <MdLibraryMusic
+                size={30}
+                color='#B3B3B3'
+              />
+          </Box>
+
+      </ListTile>
+
+      <ListTile text={'Add Song'} link={'/add-song'}>
+        {/* display d/t Icon sizes at view ports */}
+        <Box
+            display={['none', 'block', 'none']}
+          >
+            <MdAdd
+                size={36}
+                color='#B3B3B3'
+              />
+          </Box>
+
+          <Box
+            display={['none', 'none', 'block']}
+          >
+            <MdAdd
+                size={30}
+                color='#B3B3B3'
+              />
+          </Box>
+          
+      </ListTile>
+      
+    </TopContainer>
+
+
 
 
     </Container>

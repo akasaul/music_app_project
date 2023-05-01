@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import Footer from './components/Footer/Footer';
 import Sidebar from './components/Sidebar';
+import AddSong from "./pages/AddSong";
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/add-song' element={<AddSong />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
 

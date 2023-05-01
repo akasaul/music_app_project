@@ -2,9 +2,11 @@ import { Flex, Text } from "theme-ui"
 import { color, display, fontWeight } from "styled-system";
 import styled from "@emotion/styled";
 import { MdHome } from "react-icons/md";
+import { Button, Link } from "rebass";
+import { useNavigate } from "react-router-dom";
 
 
-const index = ({text, children}) => {
+const ListTile = ({text,link,  children}) => {
 
   const TileText = styled(Text)`
   ${color}
@@ -14,10 +16,25 @@ const index = ({text, children}) => {
 
   const ListTile = styled(Flex)`
     align-items: center;
+    &:hover > * {
+      color: white;
+      cursor: pointer;
+    }
   `;
+
+  const ListTileContainer = styled(Link)`
+    &:hover > * {
+      color: white;
+    }
+  `;
+
+  const navigate = useNavigate();
+
   return (
-    <div>
-      
+    <ListTileContainer
+      onClick={() => navigate(link)}
+    >
+
       <ListTile
           alignItems='center'
           sx={{
@@ -33,10 +50,10 @@ const index = ({text, children}) => {
           >
             {text}
           </TileText>
-        </ListTile>            
+        </ListTile>  
 
-    </div>
+    </ListTileContainer>
   )
 }
 
-export default index
+export default ListTile
