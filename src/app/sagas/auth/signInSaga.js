@@ -1,5 +1,5 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
-import {  signInFalure, signInRequest, signInSuccess } from '../../features/auth/authSlice';
+import {  signInFalure, signInSuccess } from '../../features/auth/authSlice';
 import { auth } from '../../../firebase/firebase';
 import {  signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
@@ -10,7 +10,7 @@ function* workAuth () {
 
     const res = yield call(() => signInWithEmailAndPassword(auth, inputEmail, inputPassword));
 
-    yield put(signInRequest(res.user));    
+    yield put(signInSuccess(res.user));    
 
   } catch(err) {
     yield put(signInFalure(err.message));

@@ -7,7 +7,7 @@ const theme  = {
     cardLight: '#303030',
     cardDark: '#171717',
     gradientStart: '#222222',
-    gradientEnd: '#121212',
+    sideBarBg: '#121212',
     textSecondary: '#B3B3B3',
     accentLight: '#C4C4C4',
     panel: '#181818',
@@ -19,7 +19,7 @@ const theme  = {
     gradient: 'linear-gradient(to bottom, #222222, #121212)',
   },
 
-  breakpoints: ['600px', '750px', '900px'],
+  breakpoints: ['400px', '600px', '750px', '900px'],
 
   fontSizes: {
     xs: '15px',
@@ -68,6 +68,15 @@ const theme  = {
       paddingBlock: '10px',
       fontSize: '20px'
     },
+
+    iconButton: {
+      color: '#B3B3B3',
+      backgroundColor: 'transparent',
+      borderRadius: '1.3rem',
+      cursor: 'pointer',
+      paddingBlock: '10px',
+      fontSize: '11px'
+    }
 
   },
 

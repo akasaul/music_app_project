@@ -8,7 +8,8 @@ import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
-import { Box } from "rebass";
+import Footer from './components/Footer/Footer';
+import Sidebar from './components/Sidebar';
 
 function App() {
 
@@ -26,15 +27,24 @@ function App() {
   ` 
   return (
     <Container 
+      display='flex '
       bg='primary'
       width='100%'
-      minHeight='200vh'
+      minHeight='100vh'
+      style={{
+        gap: '10px',
+        paddingInline: '10px'
+      }}
     >
+      <Sidebar />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
+
+      <Footer />
+
     </Container>
   );
 }

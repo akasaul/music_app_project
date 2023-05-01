@@ -29,6 +29,7 @@ const authSlice = createSlice({
     },
 
     signUpFalure: (state, action) => {
+      state.isError = true;
       state.isLoading = false;
       state.errorMsg = action.payload;
     },
@@ -46,18 +47,25 @@ const authSlice = createSlice({
     signInSuccess: (state, action) => {
       state.auth = action.payload;
       state.isLoading = false;
+      state.isSuccess = true;
     },
 
     signInFalure: (state, action) => {
+      state.isError = true;
       state.isLoading = false;
       state.errorMsg = action.payload;
     },
 
-    
+    reset: (state) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = false;
+      state.errorMsg = ''; 
+    }
     
   },
 });
 
-export const { test, signUpFalure, signUpRequest, signUpSuccess, setUserData, signInFalure, signInRequest, signInSuccess } = authSlice.actions;
+export const { test, signUpFalure, signUpRequest, signUpSuccess, setUserData, signInFalure, signInRequest, signInSuccess, reset } = authSlice.actions;
 
 export default authSlice.reducer;

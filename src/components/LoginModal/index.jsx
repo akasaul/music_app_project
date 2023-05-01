@@ -5,11 +5,11 @@ import { fontSize, maxWidth, position, width,
   variant, color } from "styled-system";
 import { MdOutlineAccountCircle, MdOutlineEmail, MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { useRef, useState} from "react";
-import { Input } from "theme-ui";
+import { Input, Spinner } from "theme-ui";
 import BaseInputWrapper from "../BaseInput";
 import SubmitButton from "../Buttons/SubmitButton";
 import TextButton from "../Buttons/TextButton";
-import { setUserData, signInRequest, signUpRequest } from "../../app/features/auth/authSlice";
+import { setUserData, signInRequest, signUpRequest, reset } from "../../app/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Label, Checkbox } from "theme-ui";
 
@@ -95,10 +95,12 @@ const Container = styled(Flex)`
   const passwordRef = useRef();
 
   const [errors, setErrors] = useState({
-    name: '',
-    email: '',
-    password: '',
+    nameErr: '',
+    emailErr: '',
+    passwordErr: '',
   });
+
+  const {nameErr, emailErr, passwordErr} = errors;
   
   // Show Password
   const [showPassword, setShowPassword] = useState(false);
@@ -107,7 +109,63 @@ const Container = styled(Flex)`
 
   const { isLoading, isError, isSuccess, erroMsg } = useSelector(state => state.auth);
 
+
+  // Utitlity for setting error values 
+  function setErrorVal(key, msg){
+
+    setErrors({
+      ...errors,
+      [key]: msg
+    })
+
+  }
+
+  // Error Checking before submission
+  const checkError = (name, email, password) => {
+    if(!isLogin) {
+      if(name.length < 4) {
+
+        setErrorVal('nameErr', 'Name Shouldn\'t be less than 6 characters');
+
+        throw Error('Name Shouldn\'t be less than 6 characters');
+      } else {
+        setErrorVal('nameErr', '');
+      }
+
+
+      const legitEmail = email
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+
+      if(!legitEmail) {
+        setErrorVal('emailErr', 'Enter a valid Email');
+
+        throw Error('Enter a valid Email');
+      } else {
+        setErrorVal('emailErr', '');
+      }
+
+      if(password.length < 6) {
+        setErrorVal('emailErr', 'Enter a valid Email');
+        throw Error('Password shouldn\'t be less than 6 characters');
+      } else {
+        setErrorVal('emailErr', '');
+      }
+
+    }
+    
+  }
+
+  // On Form Submission
   const handleSubmit = async (e) => {
+    // try {
+    //   checkError(emailRef.current.value, nameRef.current?.value, passwordRef.current?.value);
+    // } catch(err) {
+    //   console.log(err.message);
+    //   return;
+    // }
 
     e.preventDefault(); 
 
@@ -115,14 +173,26 @@ const Container = styled(Flex)`
     
     // Check if req is Sign in or Sign up
     if(isLogin) {
+      // Clearing previous state 
+      dispatch(reset());
+
+      // TODO: Login request
       dispatch(signInRequest());
     } else {
-      // TODO: Login request
+      // Clearing Prevois State 
+      dispatch(reset());
+
+      // Sign up request
       dispatch(signUpRequest());
     }
   }
-
+  
   if(!isOpen) {
+    return;
+  }
+
+
+  if(isSuccess) {
     return;
   }
 
@@ -162,6 +232,8 @@ const Container = styled(Flex)`
           as='form'
           onSubmit={handleSubmit}
           flexDirection='column'
+          autoComplete='false'
+          autoCorrect='false'
         >
             <BaseInputWrapper>
 
@@ -178,6 +250,7 @@ const Container = styled(Flex)`
                 />
 
             </BaseInputWrapper>
+
 
             {
               !isLogin &&
@@ -234,8 +307,25 @@ const Container = styled(Flex)`
             Continue
           </SubmitButton>
 
+
+
         </Container>
 
+         {
+          isLoading && 
+            <Spinner
+              color='#1ED760'
+            />
+          }
+
+          {
+            !isLoading && isError &&
+              <BottomText
+              color="white"
+              >
+                An Error Occured
+              </BottomText> 
+          }
 
         <Flex
           alignItems='center'
@@ -320,11 +410,6 @@ const Container = styled(Flex)`
     <TextButton
       onClick={() => setIsOpen(false)}
     >Back</TextButton>
-
-    {
-      isLoading &&
-      <h1 style={{color: 'white'}}>Loading...</h1> 
-    }
         
   </Modal>
     

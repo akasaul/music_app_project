@@ -8,9 +8,16 @@ import SecondaryButton from '../Buttons/SecondaryButton';
 import TextButton from '../Buttons/TextButton';
 import { useState } from 'react';
 import LoginModal from '../LoginModal';
+import useAuthStatus from '../../hooks/useAuthStatus';
+import { Spinner } from "theme-ui";
+
 
 const Header = () => {
   const  HeaderText = styled(Box)``;
+  const {isLoggedIn, isChecking } = useAuthStatus();
+
+  console.log(isLoggedIn, isChecking);
+
 
   // Modal State
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +37,7 @@ const Header = () => {
     setIsLogin(false);
   }
 
+
   return (
     <Box
       display='flex'
@@ -48,34 +56,41 @@ const Header = () => {
         Good Morning
       </HeaderText>
 
-      {/* <RightContainer
-        display='flex'
-        minWidth='130px'
-        justifyContent='space-between'
-      >
-        <MdOutlineNotifications
-          color='white'
-          size={30}
+      {
+        isLoggedIn && !isChecking ?
+        <RightContainer
+          display='flex'
+          minWidth='130px'
+          justifyContent='space-between'
+        >
+          <MdOutlineNotifications
+            color='white'
+            size={30}
+          />
+          <MdOutlineAlarm
+            color='white'
+            size={30}
+          />
+          <MdOutlineSettings
+            color='white'
+            size={30}
+          />
+        </RightContainer> :
+        isChecking && !isLoggedIn ?
+        <Spinner
+          color='#1ED760'
         />
-        <MdOutlineAlarm
-          color='white'
-          size={30}
-        />
-        <MdOutlineSettings
-          color='white'
-          size={30}
-        />
-      </RightContainer> */}
+        :
+        <Box
+        >
+          <TextButton onClick={onLogin}>
+            Login
+          </TextButton>
+          <PrimaryButton btnText={'SignUp'} onClick={onSignUp} />
+        </Box> 
+      }
 
-      <Box
-      >
-        <TextButton onClick={onLogin}>
-          Login
-        </TextButton>
-        <PrimaryButton btnText={'SignUp'} onClick={onSignUp} />
-      </Box> 
-
-        <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />
+      <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />
     </Box>
   )
 }
