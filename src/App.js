@@ -53,7 +53,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/add-song' element={<AddSong />} />
-        <Route path='/edit/:songId' element={<AddSong isEdit={true} />} />
+        <Route path='/edit-song' element={<AddSong isEdit={true} />} />
         <Route path='/favorites' element={<FavoriteSongs />} />
         <Route path='*' element={<NotFound />} />
       </Routes>

@@ -5,6 +5,7 @@ import { Box, Text } from "rebass";
 import { color, fontSize, fontWeight } from "styled-system";
 import { getAllReq } from "../app/features/song/songSlice";
 import SongTile from "../components/SongTile/SongTile";
+import '../App.css';
 
 const FavoriteSongs = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,9 @@ const FavoriteSongs = () => {
   `;
 
   return (
-    <div
+    <Box
+      className="home"
+      marginTop='1rem'
       style={{
         width: '100%'
       }}
@@ -67,12 +70,9 @@ const FavoriteSongs = () => {
             )
         }
 
-
       </Box>
 
-
-
-    </div>
+    </Box>
   )
 }
 

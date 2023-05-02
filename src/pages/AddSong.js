@@ -1,26 +1,32 @@
 import { MdAdd, MdAlbum, MdCreate, MdFileUpload, MdLink, MdMic, MdMusicNote, MdSearch, MdTimer } from 'react-icons/md'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useState } from 'react'
 import { Box, Container, Flex, Image, Input, Spinner, Text } from 'theme-ui';
 import SubmitButton from '../components/Buttons/SubmitButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { reset, setQuery, searchRequest, setSearchQuery, setSong, addSongRequest } from '../app/features/song/songSlice';
+import { reset, setQuery, searchRequest, setSearchQuery, setSong, addSongRequest, editSongReq } from '../app/features/song/songSlice';
 import SearchResult from '../components/SearchResult/SearchResult';
 import '../App.css';
 import { auth } from '../firebase/firebase';
 import LoginModal from '../components/LoginModal';
 
 
+// Generic page used for both editing and adding music 
+
 const AddSong = ({isEdit}) => {
 
-    const [formData, setFormData] = useState({
-        title: '',
-        artist: '',
-        album: '',
-        genre: 'pop',
-        duration: '',
-        imageUrl: '',
-    });
+  // Get Query parameters
+  const [params] = useSearchParams();
+
+  // Prefill from query params 
+  const [formData, setFormData] = useState({
+      title: !isEdit ? '' : params.get('title'),
+      artist: !isEdit ? '' : params.get('artist'),
+      album: !isEdit ? '' : params.get('album'),
+      genre: 'pop',
+      duration: !isEdit ? '' : params.get('duration'),
+      imageUrl: !isEdit ? '' : params.get('imageUrl'),
+  });
 
     const [query, setQuery] = useState('');
 
@@ -51,7 +57,7 @@ const AddSong = ({isEdit}) => {
 
     // General Error Object
     const [errors, setErrors] = useState({
-      titleError: '', 
+      titleError: '' , 
       artistError: '',
       albumError: '',
       genreError: '',
@@ -138,7 +144,15 @@ const AddSong = ({isEdit}) => {
       }
 
       dispatch(reset());
-      dispatch(setSong(formData));
+
+      
+      dispatch(setSong({formData, id: params.get('id')}));
+
+      if(isEdit) {
+        dispatch(editSongReq());
+        return;
+      }
+
       dispatch(addSongRequest());
     };
 
@@ -147,6 +161,12 @@ const AddSong = ({isEdit}) => {
     if(isSuccess && currentState === 'ADD') {
       navigate('/');  
     }
+
+    if(isSuccess && currentState === 'EDIT') {
+      navigate('/');  
+    }
+
+
 
   return (
     <Box
@@ -421,14 +441,14 @@ const AddSong = ({isEdit}) => {
 
             <Box>
               {
-                imageUrl.length > 0 &&
+                imageUrl.length > 0 ?
                 <Image
                   src={imageUrl}
                   width='100%'
                   sx={{
                     borderRadius: '5px'
                   }}
-                ></Image>
+                ></Image> : null
               }
             </Box>
 
@@ -441,15 +461,30 @@ const AddSong = ({isEdit}) => {
             marginBlock: '20px',  
           }}
         >
-          <SubmitButton>
-            Add Song
-            {
-              isLoading && currentState === 'ADD' &&
-              <Spinner 
-                height='20px'
-              />
-            }
-        </SubmitButton>
+          {
+            isEdit ?
+            <SubmitButton>
+              Edit Song
+              {
+                isLoading && currentState === 'EDIT' &&
+                <Spinner 
+                  height='20px'
+                />
+              }
+            </SubmitButton> :
+
+            <SubmitButton>
+              Add Song
+              {
+                isLoading && currentState === 'ADD' &&
+                <Spinner 
+                  height='20px'
+                />
+              }
+          </SubmitButton>
+            
+
+          }
 
         </Box>
 

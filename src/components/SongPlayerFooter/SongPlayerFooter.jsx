@@ -182,10 +182,8 @@ const SongPlayerFooter = () => {
                 onClick={toggleFav}
                 size={24}/> 
             }
-
-
+            
           </Flex>
-
 
         </Flex>
 

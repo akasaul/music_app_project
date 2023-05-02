@@ -14,8 +14,10 @@ const songSlice = createSlice({
     errorMsg: '',
     currentState: '',
     isPlaying: false,
+    songId: null,
   },
   reducers: {
+
     // Searching reducers
     searchRequest: (state, action) => {
       state.isLoading = true;
@@ -107,11 +109,43 @@ const songSlice = createSlice({
     getAllFailure: (state) => {
       state.isLoading = false;
       state.isError = true;
+    },
+
+
+    editSongReq: (state) => {
+      state.isLoading = true;
+      state.currentState = 'EDIT';
+    },
+
+    editSongSuccess: (state, action) => {
+      state.song = action.payload;
+      state.isLoading = false;
+    },
+
+    editSongFailure: (state) => {
+      state.isLoading = false;
+      state.isError = true;
+    },
+
+    deleteSongReq: (state, action) => {
+      state.songId = action.payload;
+      state.isLoading = true;
+      state.currentState = 'DELETE';
+      state.songs = state.songs.filter(song => song.id !== action.payload);
+    },
+
+    deleteSongSuccess: (state) => {
+      state.isLoading = false;
+    },
+
+    deleteSongFailure: (state, action) => {
+      state.isLoading = false;
+      state.songs = action.payload;
     }
 
   },
 });
 
-export const { searchRequest, searchRequestFailure, setSearchQuery, searchRequestSuccess, reset, addSongFailure, addSongRequest, addSongSuccess, setSong, fetchRecentFailure, fetchRecentRequest, fetchRecentSuccess, playSong, stopSong, getAllFailure, getAllReq, getAllSuccess } = songSlice.actions;
+export const { searchRequest, searchRequestFailure, setSearchQuery, searchRequestSuccess, reset, addSongFailure, addSongRequest, addSongSuccess, setSong, fetchRecentFailure, fetchRecentRequest, fetchRecentSuccess, playSong, stopSong, getAllFailure, getAllReq, getAllSuccess, editSongFailure, editSongReq, editSongSuccess, deleteSongFailure, deleteSongReq, deleteSongSuccess } = songSlice.actions;
 
 export default songSlice.reducer;

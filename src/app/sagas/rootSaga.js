@@ -8,6 +8,8 @@ import searchSaga from './song/searchSaga';
 import favSong from './song/favSongSaga';
 import setUserSaga from './user/getUser';
 import getAllSaga from './song/getAllSaga';
+import editSong from './song/editSongSaga';
+import deleteSong from './song/deleteSongSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -19,5 +21,7 @@ export default function* rootSaga() {
     favSong(),
     setUserSaga(),
     getAllSaga(),
+    editSong(),
+    deleteSong(),
   ])
 }

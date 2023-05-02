@@ -1,7 +1,7 @@
 import { Flex, Text } from "theme-ui"
 import { color, display, fontWeight } from "styled-system";
 import styled from "@emotion/styled";
-import { MdHome } from "react-icons/md";
+import { MdHome, MdMore } from "react-icons/md";
 import { Button, Link } from "rebass";
 import { useNavigate } from "react-router-dom";
 

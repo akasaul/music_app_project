@@ -29,11 +29,12 @@ const FavoritesSection = () => {
 
   return (
     <Box>
-      <h4
+      <h3
         style={{
-          color: 'white'
+          color: 'white',
+          marginBlock: '1rem'
         }}
-      >Songs You Like</h4>
+      >Songs You Like</h3>
 
       <Flex
         flexWrap='wrap'
