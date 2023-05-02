@@ -1,7 +1,6 @@
 import NavBar from '../components/Navbar/Navbar';
 import { Box } from "rebass";
 import RecentSongs from '../components/RecentSongs/RecentSongs';
-import SongPlayerFooter from '../components/SongPlayerFooter/SongPlayerFooter';
 import FavoritesSection from '../components/FavoritesSection/FavoritesSection';
 import styled from '@emotion/styled';
 import { color } from 'styled-system';
@@ -12,6 +11,8 @@ const Home = () => {
   const Home = styled(Box)`
     ${color}
     margin-top: 10px;
+    max-width: 950px;
+    
   `;
   
   return (
@@ -26,7 +27,6 @@ const Home = () => {
     >
       <NavBar />
       <RecentSongs />
-      <SongPlayerFooter />
       <FavoritesSection />
     </Home>
   )

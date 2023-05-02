@@ -15,15 +15,10 @@ import { setUserReq } from "./app/features/user/userSlice";
 import useAuthStatus from "./hooks/useAuthStatus";
 import { getAllReq } from "./app/features/song/songSlice";
 import FavoriteSongs from "./pages/FavoriteSongs";
+import Search from "./pages/Search";
+import SongPlayerFooter from "./components/SongPlayerFooter/SongPlayerFooter";
 
 function App() {
-
-  // const dispatch = useDispatch();
-  // const { auth } = useSelector(state => state.auth);
-
-  // useEffect(() => {
-  //   dispatch(test());
-  // }, [dispatch]);
 
   const { isLoggedIn } = useAuthStatus();
   const dispatch = useDispatch();
@@ -55,8 +50,11 @@ function App() {
         <Route path='/add-song' element={<AddSong />} />
         <Route path='/edit-song' element={<AddSong isEdit={true} />} />
         <Route path='/favorites' element={<FavoriteSongs />} />
+        <Route path='/Search' element={<Search />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
+
+      <SongPlayerFooter />
 
       <Footer />
 

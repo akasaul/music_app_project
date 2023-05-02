@@ -25,6 +25,29 @@ select:-webkit-autofill {
     scrollbar-width: none;  
 }
 
+.search-container {
+  background: #282828;
+  height: 50px;
+  border-radius: 2rem;
+  display: flex;
+  max-width: 400px;
+  align-items: center;
+  padding: 10px;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  margin-inline: auto;
+  margin-block: auto;
+  height: 90%;
+  color: #fff;
+}
+
+.search-container:has(input:focus)  {
+  border: 2px solid #fff;
+}
+
 @media (min-width: 600px) {
   .home {
     background: linear-gradient(#222222, #000);

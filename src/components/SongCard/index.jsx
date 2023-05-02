@@ -33,7 +33,7 @@ const SongCard = ({artist, id, imageUrl, title, album, duration, genre}) => {
     position: absolute;
     right: 1rem;
   `
-
+  
   const disptch = useDispatch();
 
   const startPlay = () => {

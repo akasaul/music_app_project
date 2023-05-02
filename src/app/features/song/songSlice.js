@@ -6,6 +6,7 @@ const songSlice = createSlice({
   initialState: {
     songs: [],
     recents: [],
+    searchResult: [],
     song: null,
     query: '',
     isLoading: false,
@@ -39,11 +40,12 @@ const songSlice = createSlice({
       state.query = action.payload;
     },
 
-
+    // Setting up song for play
     setSong: (state, action) => {
       state.song = action.payload;
     },
     
+    // create song 
     addSongRequest: (state, action) => {
       state.isLoading = true;
       state.currentState = 'ADD';
@@ -60,7 +62,7 @@ const songSlice = createSlice({
       state.errorMsg = action.payload;
     },
 
-
+    // Fetch recently created songs 
     fetchRecentRequest: (state, action) => {
       state.isLoading = true;
       state.currentState = 'FETCH_RECENT';
@@ -78,6 +80,7 @@ const songSlice = createSlice({
       state.errorMsg = action.payload;
     },
 
+    // reset all songs 
     reset: (state) => {
       state.isError = false;
       state.isSuccess = false;
@@ -86,6 +89,7 @@ const songSlice = createSlice({
       state.errorMsg = '';
     },
 
+    // start playing a song
     playSong: (state, action) => {
       state.isPlaying = true;
       state.song = action.payload;
@@ -96,6 +100,7 @@ const songSlice = createSlice({
       state.song = null;
     },
 
+    // get all songs
     getAllReq: (state) => {
       state.isLoading = true;
       state.currentState = 'GET_ALL';
@@ -103,7 +108,9 @@ const songSlice = createSlice({
 
     getAllSuccess: (state, action) => {
       state.songs = action.payload;
+      state.searchResult = action.payload;
       state.isLoading = false;
+      state.isSuccess = true;
     },
 
     getAllFailure: (state) => {
@@ -111,7 +118,7 @@ const songSlice = createSlice({
       state.isError = true;
     },
 
-
+    // Edit songs reducers
     editSongReq: (state) => {
       state.isLoading = true;
       state.currentState = 'EDIT';
@@ -127,6 +134,7 @@ const songSlice = createSlice({
       state.isError = true;
     },
 
+    // Delete song reducers 
     deleteSongReq: (state, action) => {
       state.songId = action.payload;
       state.isLoading = true;
@@ -141,7 +149,7 @@ const songSlice = createSlice({
     deleteSongFailure: (state, action) => {
       state.isLoading = false;
       state.songs = action.payload;
-    }
+    },
 
   },
 });

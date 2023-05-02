@@ -5,17 +5,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Flex, Image, Text } from 'rebass';
 import { color, flex, fontFamily, fontSize, fontWeight } from 'styled-system';
-import { deleteSongReq } from '../../app/features/song/songSlice';
+import { deleteSongReq, playSong } from '../../app/features/song/songSlice';
 import { setFavsReq } from '../../app/features/user/userSlice';
+import useAuthStatus from '../../hooks/useAuthStatus';
 import { formatTime } from '../../utils/formatTime';
+import LoginModal from '../LoginModal';
 import './SongTile.css';
 
-const SongTile = ({imageUrl, title, duration, artist, album, index, id}) => {
+const SongTile = ({imageUrl, title, duration, artist, album, index, id, isSearch, genre}) => {
   const Tile  = styled(Flex)`
+    border-radius: 5px;
     justify-content: space-between;
     align-items: center;
     max-width: 800px;
-    margin-inline: auto;
+    // margin-inline: auto;
+    &:hover {
+      background: #2A2A2A;
+      cursor: pointer;
+    }
   `;
   
   
@@ -40,6 +47,8 @@ const SongTile = ({imageUrl, title, duration, artist, album, index, id}) => {
     ${fontWeight}  
   `;
 
+  const {isLoggedIn} = useAuthStatus();
+
   // Song duration formatted
   const time = formatTime(duration);
 
@@ -47,6 +56,10 @@ const SongTile = ({imageUrl, title, duration, artist, album, index, id}) => {
   const {favs} = useSelector(state => state.user);
 
   const toggleFav = () => {
+    if(!isLoggedIn) {
+      setOpenModal(true);
+      return;
+    }
     if(id) {
       dispatch(setFavsReq(id));
     }
@@ -83,8 +96,19 @@ const SongTile = ({imageUrl, title, duration, artist, album, index, id}) => {
     dispatch(deleteSongReq(id));
   }
 
+  const [openModal, setOpenModal] = useState(false);
+
+    
+  const disptch = useDispatch();
+
+  const startPlay = () => {
+    disptch(playSong({title, artist, imageUrl, album, duration, genre, id}));
+  }
+
+
   return (
     <Tile
+      onClick={startPlay  }
       sx={{
         gap: '20px',
         p: '8px',
@@ -127,14 +151,18 @@ const SongTile = ({imageUrl, title, duration, artist, album, index, id}) => {
         </Flex>
       </Flex>
 
-      <Time
-        color='textSecondary'
-        fontWeight='500'
-        flex='1'
-        display={['none', 'none', 'none', 'block']}
-      >
-        {album.length > 13 ? `${album.slice(0, 13)}..`: album }
-      </Time>
+        {
+
+          !isSearch && 
+          <Time
+            color='textSecondary'
+            fontWeight='500'
+            flex='1'
+            display={['none', 'none', 'none', 'block']}
+          >
+            {album.length > 13 ? `${album.slice(0, 13)}..`: album }
+          </Time>
+        }
 
       {
         favs.includes(id) ?
@@ -198,7 +226,7 @@ const SongTile = ({imageUrl, title, duration, artist, album, index, id}) => {
         </Box>
       }
 
-
+      <LoginModal isOpen={openModal} setIsOpen={setOpenModal} />
     </Tile>
   )
 }

@@ -13,7 +13,7 @@ const FavoritesSection = () => {
 
   useEffect(() => {
     dispatch(getAllReq());
-  }, []);
+  }, [dispatch]);
 
   const { songs } = useSelector(state => state.song);
   const { favs } = useSelector(state => state.user);
@@ -24,6 +24,10 @@ const FavoritesSection = () => {
               color='green'
             />
           </Box>
+  }
+
+  if(!isLoggedIn) {
+    return;
   }
 
 

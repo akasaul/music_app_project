@@ -12,6 +12,7 @@ const userSlice = createSlice({
   },
 
   reducers: {
+    // Set user data
     setUserReq: (state) => {
       state.isLoading = true;
     },
@@ -22,6 +23,7 @@ const userSlice = createSlice({
       state.favs = action.payload.favorites;
     },
 
+    // Add song to favorites
     setFavsReq: (state, action) => {
       state.isLoading = true;
       state.favId = action.payload;

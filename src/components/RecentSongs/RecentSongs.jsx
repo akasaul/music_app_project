@@ -62,8 +62,6 @@ const RecentSongs = () => {
             )
         }
       </RecentGrid>
-
-
     </Flex>
   )
 }

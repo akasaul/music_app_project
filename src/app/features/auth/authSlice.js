@@ -14,10 +14,8 @@ const authSlice = createSlice({
     errorMsg: '',
   },
   reducers: {
-    test: (state, action) => {
-      state.auth = action.payload;
-    },
 
+    // Sign up reducers
     signUpRequest: (state) => {
       state.isLoading = true;
     },
@@ -34,12 +32,15 @@ const authSlice = createSlice({
       state.errorMsg = action.payload;
     },
     
+
+    // set user data for accepting from form
     setUserData: (state, action) => {
       state.inputEmail = action.payload.email;
       state.inputPassword = action.payload.password;
       state.inputName = action.payload.name;
     },
 
+    // sign in reducers 
     signInRequest: (state) => {
       state.isLoading = true;
     },
@@ -56,6 +57,7 @@ const authSlice = createSlice({
       state.errorMsg = action.payload;
     },
 
+    // reset all states  
     reset: (state) => {
       state.isLoading = false;
       state.isError = false;

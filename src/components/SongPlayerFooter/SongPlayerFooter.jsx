@@ -6,7 +6,9 @@ import { Box, Button, Flex, Text } from "rebass"
 import { display, fontSize, position } from "styled-system";
 import { Image } from "theme-ui";
 import { setFavs, setFavsReq } from "../../app/features/user/userSlice";
+import useAuthStatus from "../../hooks/useAuthStatus";
 import { formatTime } from "../../utils/formatTime";
+import LoginModal from "../LoginModal";
 import './songPlayfooter.css';
 
 const SongPlayerFooter = () => {
@@ -22,8 +24,6 @@ const SongPlayerFooter = () => {
     ${position}
     ${display}
   `;
-
-
 
   const SongPlayerDesktop = styled(SongPlayer)`
     border: none;
@@ -47,9 +47,12 @@ const SongPlayerFooter = () => {
   `;
 
   const [ play, setPlay ] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
+
   const [expand, setExpand] = useState(false);
   const dispatch = useDispatch();
   const { favs } = useSelector(state => state.user);
+  const {isLoggedIn} = useAuthStatus();
 
 
   const { song, isPlaying } = useSelector(state => state.song);
@@ -67,7 +70,12 @@ const SongPlayerFooter = () => {
     return;
   }
 
+
   const toggleFav = () => {
+    if(!isLoggedIn) {
+      setOpenModal(true);
+      return;
+    }
     dispatch(setFavsReq(song.id));
   }
 
@@ -281,6 +289,7 @@ const SongPlayerFooter = () => {
         }
 
       </SongPlayerDesktop>
+      <LoginModal isOpen={openModal} setIsOpen={setOpenModal} />
     </>
   )
 }
