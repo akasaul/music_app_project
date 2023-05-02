@@ -58,7 +58,9 @@ const RecentSongs = () => {
            >An Error Occurred</h5>
            :
           recents?.map(recent => 
-            <SongCard artist={recent.artist} imageUrl={recent.imageUrl} title={recent.title} />
+            <SongCard key={recent.id} id={recent.id} artist={recent.artist} imageUrl={recent.imageUrl} title={recent.title} album={recent.album} 
+              duration={recent.duration} genre={recent.genre}
+            />
             )
         }
       </RecentGrid>

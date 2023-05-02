@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { Box, Flex, Image, Text } from 'theme-ui'
+import { formatTime } from '../../utils/formatTime';
 
 const SearchResult = ({title, imageUrl, duration, artist, album, setFormData, formData}) => {
   const Container = styled(Box)`
@@ -43,11 +44,10 @@ const SearchResult = ({title, imageUrl, duration, artist, album, setFormData, fo
   `;
 
 
-  let minutes, seconds;
+  let time;
 
   if(duration) {
-    minutes = Math.floor(duration / 60);
-    seconds = duration - minutes * 60;
+    time = formatTime(duration)
   }
 
   const handleClick = (e) => {
@@ -95,7 +95,7 @@ const SearchResult = ({title, imageUrl, duration, artist, album, setFormData, fo
               color: 'white'
             }}
           >{album.length  > 15 ? `${album.slice(0, 15)}...` : album}</Title>
-            {`${minutes}:${seconds}` }
+            {time}
         </TimeInfo>
           
       </MusicSearchResult>

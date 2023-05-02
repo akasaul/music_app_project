@@ -11,6 +11,8 @@ import NotFound from "./pages/NotFound";
 import Footer from './components/Footer/Footer';
 import Sidebar from './components/Sidebar';
 import AddSong from "./pages/AddSong";
+import { setUserReq } from "./app/features/user/userSlice";
+import useAuthStatus from "./hooks/useAuthStatus";
 
 function App() {
 
@@ -20,6 +22,13 @@ function App() {
   // useEffect(() => {
   //   dispatch(test());
   // }, [dispatch]);
+
+  const { isLoggedIn } = useAuthStatus();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setUserReq());
+  },[isLoggedIn, dispatch]);
     
     const Container = styled.div`
     ${color}

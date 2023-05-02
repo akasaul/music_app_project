@@ -5,6 +5,8 @@ import signUpSaga from './auth/signUpSaga';
 import addSong from './song/addSongSaga';
 import fetchRecentSaga from './song/fetchRecentSaga';
 import searchSaga from './song/searchSaga';
+import favSong from './song/favSongSaga';
+import setUserSaga from './user/getUser';
 
 export default function* rootSaga() {
   yield all([
@@ -13,5 +15,8 @@ export default function* rootSaga() {
     searchSaga(),
     addSong(),
     fetchRecentSaga(),
+    favSong(),
+    setUserSaga(),
+    getAllSaga(),
   ])
 }

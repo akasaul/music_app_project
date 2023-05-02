@@ -3,7 +3,8 @@ import { test, signUpFalure, signUpRequest, signUpSuccess } from '../../features
 
 import { auth, db } from '../../../firebase/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
+import { setUser } from '../../features/user/userSlice';
 
 // Worker function
 function* workAuth () {

@@ -6,7 +6,7 @@ import { color, fontSize, fontWeight, grid } from "styled-system";
 import { playSong } from "../../app/features/song/songSlice";
 import './songCard.css';
 
-const SongCard = ({artist, imageUrl, title}) => {
+const SongCard = ({artist, id, imageUrl, title, album, duration, genre}) => {
   const CardText = styled(Text)`
     ${color}
     ${fontSize}
@@ -37,7 +37,7 @@ const SongCard = ({artist, imageUrl, title}) => {
   const disptch = useDispatch();
 
   const startPlay = () => {
-    disptch(playSong({title, artist, imageUrl}));
+    disptch(playSong({title, artist, imageUrl, album, duration, genre, id}));
   }
 
   return (
@@ -72,7 +72,7 @@ const SongCard = ({artist, imageUrl, title}) => {
 
         <CardSubtitle
           color='textSecondary'
-          fontSize={['xs', 'xs', 'xs']}
+        fontSize={['xs', 'xs', 'xs']}
           display={['none', 'none', 'block']}
         >
           {title}

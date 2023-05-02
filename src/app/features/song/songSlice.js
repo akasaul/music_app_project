@@ -91,11 +91,26 @@ const songSlice = createSlice({
     stopSong: (state, action) => {
       state.isPlaying = false;
       state.song = null;
+    },
+
+    getAllReq: (state) => {
+      state.isLoading = true;
+      state.currentState = 'GET_ALL';
+    },
+
+    getAllSuccess: (state, action) => {
+      state.songs = action.payload;
+      state.isLoading = false;
+    },
+
+    getAllFailure: (state) => {
+      state.isLoading = false;
+      state.isError = true;
     }
 
   },
 });
 
-export const { searchRequest, searchRequestFailure, setSearchQuery, searchRequestSuccess, reset, addSongFailure, addSongRequest, addSongSuccess, setSong, fetchRecentFailure, fetchRecentRequest, fetchRecentSuccess, playSong, stopSong } = songSlice.actions;
+export const { searchRequest, searchRequestFailure, setSearchQuery, searchRequestSuccess, reset, addSongFailure, addSongRequest, addSongSuccess, setSong, fetchRecentFailure, fetchRecentRequest, fetchRecentSuccess, playSong, stopSong, getAllFailure, getAllReq, getAllSuccess } = songSlice.actions;
 
 export default songSlice.reducer;

@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { reset, setQuery, searchRequest, setSearchQuery, setSong, addSongRequest } from '../app/features/song/songSlice';
 import SearchResult from '../components/SearchResult/SearchResult';
 import '../App.css';
+import { auth } from '../firebase/firebase';
+import LoginModal from '../components/LoginModal';
 
 
 const AddSong = ({isEdit}) => {
@@ -124,14 +126,17 @@ const AddSong = ({isEdit}) => {
 
     }
 
+    const [openModal, setOpenModal] = useState();
+
 
     const onSubmit = (e) => {
       e.preventDefault();
-      try {
-        validate();
-      } catch(err) {
-        console.log(err.message);
+
+      if(!auth.currentUser) {
+        setOpenModal(true);
+        return;
       }
+
       dispatch(reset());
       dispatch(setSong(formData));
       dispatch(addSongRequest());
@@ -277,18 +282,7 @@ const AddSong = ({isEdit}) => {
               /> 
 
           </Container>            
-            {
-              titleError &&
-              <Text
-                sx={{
-                  color: 'white',
-                  maxWidth: '500px',
-                  marginInline: 'auto',
-                  width: '100%',
-                }}
-              >{titleError}</Text>
-            }
-
+         
           <Container
             bg='inputBg'
             p='5px'
@@ -312,18 +306,6 @@ const AddSong = ({isEdit}) => {
               /> 
           </Container>     
 
-            {
-              artistError &&
-              <Text
-                sx={{
-                  color: 'white',
-                  maxWidth: '500px',
-                  marginInline: 'auto',
-                  width: '100%',
-                }}
-              >{artistError}</Text>
-            }      
-
         <Container
             bg='inputBg'
             p='5px'
@@ -346,19 +328,7 @@ const AddSong = ({isEdit}) => {
                 size={24} 
               /> 
         </Container>         
-        {
-              albumError &&
-              <Text
-                sx={{
-                  color: 'white',
-                  maxWidth: '500px',
-                  marginInline: 'auto',
-                  width: '100%',
-                }}
-              >{albumError}</Text>
-            }      
-
-
+      
         <Container
               bg='inputBg'
               p='5px'
@@ -382,12 +352,13 @@ const AddSong = ({isEdit}) => {
                   fontSize: '18px'
                 }}
             >
-              <option value='pop'>Pop</option>
-              <option value='rap'>Rap</option>
-              <option value='r&b'>R&B</option>
-              <option value='country'> Country</option>
-              <option value='rock'>Rock</option>
-              <option value='other'>Other</option>
+              <option value='Pop'>Pop</option>
+              <option value='HipHop'>HipHop</option>
+              <option value='R&B'>R&B</option>
+              <option value='Country'> Country</option>
+              <option value='Rock'>Rock</option>
+              <option value='Ethiopian'>Ethiopian</option>
+              <option value='Other'>Other</option>
             </select>
 
         </Container>      
@@ -483,6 +454,8 @@ const AddSong = ({isEdit}) => {
         </Box>
 
         </Container>
+
+        <LoginModal isOpen={openModal} setIsOpen={setOpenModal} />
     </Box>
   )
 }

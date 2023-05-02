@@ -1,7 +1,7 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { addSongFailure, addSongSuccess } from '../../features/song/songSlice';
-import { db } from '../../../firebase/firebase';
-import { add, addDoc, collection } from 'firebase/firestore';
+import { auth, db } from '../../../firebase/firebase';
+import { add, addDoc, collection, doc } from 'firebase/firestore';
 import { serverTimestamp } from 'firebase/firestore';
 
 // Worker function
@@ -15,6 +15,7 @@ function* workAddSong () {
       ...song, 
       playlists: [], 
       timeStamp: serverTimestamp(),
+      postedBy: doc(db, `/users/${auth.currentUser.uid}`)
     }));
 
     console.log(res);

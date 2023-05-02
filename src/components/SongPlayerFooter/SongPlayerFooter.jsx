@@ -1,10 +1,12 @@
 import styled from "@emotion/styled"
 import { useState } from "react";
 import { MdExpandLess, MdExpandMore, MdFavorite, MdFavoriteBorder, MdMore, MdOutlineFavorite, MdOutlinePlayArrow, MdPause, MdPlayArrow, MdPlayCircle, MdSkipNext, MdSkipPrevious } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Flex, Text } from "rebass"
 import { display, fontSize, position } from "styled-system";
 import { Image } from "theme-ui";
+import { setFavs, setFavsReq } from "../../app/features/user/userSlice";
+import { formatTime } from "../../utils/formatTime";
 import './songPlayfooter.css';
 
 const SongPlayerFooter = () => {
@@ -24,9 +26,9 @@ const SongPlayerFooter = () => {
 
 
   const SongPlayerDesktop = styled(SongPlayer)`
-    height: 80px;
     border: none;
     justify-content: space-between;
+    align-items: start;
   `;
 
   const Title = styled(Text)`
@@ -45,13 +47,31 @@ const SongPlayerFooter = () => {
   `;
 
   const [ play, setPlay ] = useState(true);
+  const [expand, setExpand] = useState(false);
+  const dispatch = useDispatch();
+  const { favs } = useSelector(state => state.user);
+
 
   const { song, isPlaying } = useSelector(state => state.song);
 
+  const SongInfo = styled(Flex)`
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding: 5px;
+    border-radius: 5px;
+    width: 60%;
+  `;
 
   if(!song || !isPlaying) {
     return;
   }
+
+  const toggleFav = () => {
+    dispatch(setFavsReq(song.id));
+  }
+
+
 
   return (
     <>
@@ -112,6 +132,9 @@ const SongPlayerFooter = () => {
         bg={'primary'}
         color={'textPrimary'}
         display={['none', 'none','flex']}
+        sx={{
+          height: expand ? '125px' : '80px',
+        }}
       >
 
         <Flex
@@ -150,9 +173,17 @@ const SongPlayerFooter = () => {
 
             </Flex>
 
-            <MdFavoriteBorder 
-                  size={24}
-                />
+            {
+              favs.includes(song.id) ?
+              <MdFavorite 
+                onClick={toggleFav}
+                size={24}/>
+                :
+                <MdFavoriteBorder 
+                onClick={toggleFav}
+                size={24}/> 
+            }
+
 
           </Flex>
 
@@ -199,7 +230,7 @@ const SongPlayerFooter = () => {
             <Timer
               fontSize={['12px']}
             >
-              3:30
+              {formatTime(song.duration)}
             </Timer>
 
           </Flex>
@@ -211,9 +242,46 @@ const SongPlayerFooter = () => {
             gap: '10px'
           }}
         >
-          <MdExpandLess size={32} /> 
+          {
+            expand ?
+            <MdExpandLess size={32}  onClick={() => setExpand(false)}/> : 
+            <MdExpandMore size={32}  onClick={() => setExpand(true)}/> 
+          }
         </Flex>
+        
+        {
+          expand &&
+          <SongInfo
+            sx={{
+              gap: '10px'
+            }}
+          >
+            <Text
+              sx={{
+                fontSize: '14px'
+              }}
+            >
+              More Info: 
+            </Text>
+            <Box>
+              <Text
+                sx={{
+                  fontSize: '14px'
+                }}
+              >
+                Album: {song.album}
+              </Text>
 
+              <Text
+                sx={{
+                  fontSize: '14px'
+                }}
+              >
+                Genre: {song.genre}
+              </Text>
+            </Box>
+          </SongInfo>
+        }
 
       </SongPlayerDesktop>
     </>

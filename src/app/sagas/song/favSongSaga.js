@@ -1,34 +1,62 @@
-// import { call, put, select, takeEvery } from 'redux-saga/effects';
-// import { addSongFailure, addSongSuccess } from '../../features/song/songSlice';
-// import { db } from '../../../firebase/firebase';
-// import { add, addDoc, collection } from 'firebase/firestore';
-// import { serverTimestamp } from 'firebase/firestore';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
+import { auth, db } from '../../../firebase/firebase';
+import { doc, updateDoc, arrayUnion, setDoc, collection, where, query, getDoc, getDocs, arrayRemove } from 'firebase/firestore';
+import { setFavs, setFavsError } from '../../features/user/userSlice';
 
-// // Worker function
-// function* workFavSong () {
-//   try {
+// Worker function
+function* workFavSong () {
 
-//     const {song} = yield select((state) => state.song);
+  const {favId} = yield select((state) => state.user);
+
+  // Optimistic ui
+  
+  yield put(setFavs(favId));    
+  
+  try {
+    const colRef = collection(db, 'users');
+
+    const q = query(colRef, where('id', '==', auth.currentUser.uid));
+
+    const snapShot = yield call(() => getDocs(q, {
+      favorites: arrayUnion(favId),
+    }));  
+
+    let id;
+    let found = false;
+
+    snapShot.docs.forEach(doc => {
+      if(doc.id == favId) {
+        found = true;
+      }
+    })
+
+    snapShot.docs.forEach(doc => {
+      id = doc.id;
+    });
     
+    const docRef = doc(db, 'users', id);
 
-//     const res = yield call(() => addDoc(collection(db, 'users', 'favorites'), {
-//       ...song, 
-//       playlists: [], 
-//       timeStamp: serverTimestamp(),
-//     }));
+    // Check if favorite exists in favs array
+    if(found) {
+      yield call(() => updateDoc(docRef, {
+        favorites: arrayRemove(favId),
+      }));  
+    }
 
-//     console.log(res);
+    yield call(() => updateDoc(docRef, {
+      favorites: arrayUnion(favId),
+    }));  
 
-//     yield put(addSongSuccess());    
+  } catch(err) {
+    console.log(err);
+    yield put(setFavsError(favId));    
+  }
 
-//   } catch(err) {
-//     yield put(addSongFailure(err.message));
-//   }
-// }
+}
 
-// // Add Song saga 
-// function* addSong() {
-//   yield takeEvery('song/addSongRequest', workFavSong)
-// }
+// Fav Song saga 
+function* favSong() {
+  yield takeEvery('user/setFavsReq', workFavSong)
+}
 
-// export default addSong;
+export default favSong;
