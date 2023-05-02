@@ -27,7 +27,7 @@ function* workUser () {
     yield put(setUser(user));    
 
   } catch(err) {
-    console.log(err);
+    // console.log(err);
   }
 }
 

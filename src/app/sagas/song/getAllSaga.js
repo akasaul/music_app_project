@@ -1,5 +1,5 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
-import { fetchRecentFailure, fetchRecentSuccess } from '../../features/song/songSlice';
+import { fetchRecentFailure, fetchRecentSuccess, getAllFailure, getAllSuccess } from '../../features/song/songSlice';
 import { db } from '../../../firebase/firebase';
 import { collection, getDocs, limit, orderBy, query, where } from 'firebase/firestore';
 
@@ -16,16 +16,16 @@ function* workGetAll () {
       songs.push({id: doc.id, ...doc.data()});
     })
 
-    yield put(fetchRecentSuccess(songs));    
+    yield put(getAllSuccess(songs));    
 
   } catch(err) {
-    yield put(fetchRecentFailure(err.message));
+    yield put(getAllFailure(err.message));
   }
 }
 
-// Add Song saga 
-function* fetchRecentSaga() {
-  yield takeEvery('song/fetchRecentRequest', workGetAll)
+// Get All Songs saga 
+function* getAllSaga() {
+  yield takeEvery('song/getAllReq', workGetAll)
 }
 
-export default fetchRecentSaga;
+export default getAllSaga;

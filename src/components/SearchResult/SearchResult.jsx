@@ -90,11 +90,12 @@ const SearchResult = ({title, imageUrl, duration, artist, album, setFormData, fo
         </SongInfo>
 
         <TimeInfo>  
+          
         <Title
             style={{
               color: 'white'
             }}
-          >{album.length  > 15 ? `${album.slice(0, 15)}...` : album}</Title>
+          >{album?.length  > 15 ? `${album?.slice(0, 15)}...` : album}</Title>
             {time}
         </TimeInfo>
           

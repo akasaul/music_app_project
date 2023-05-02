@@ -8,7 +8,7 @@ function* workFavSong () {
 
   const {favId} = yield select((state) => state.user);
 
-  // Optimistic ui
+  // Optimistic ui Update 
   
   yield put(setFavs(favId));    
   
@@ -17,30 +17,31 @@ function* workFavSong () {
 
     const q = query(colRef, where('id', '==', auth.currentUser.uid));
 
-    const snapShot = yield call(() => getDocs(q, {
-      favorites: arrayUnion(favId),
-    }));  
+    const snapShot = yield call(() => getDocs(q));  
 
     let id;
     let found = false;
 
-    snapShot.docs.forEach(doc => {
-      if(doc.id == favId) {
-        found = true;
-      }
-    })
-
+    
     snapShot.docs.forEach(doc => {
       id = doc.id;
     });
     
+    snapShot.docs.forEach(doc => {
+      if(doc.data().favorites.includes(favId)) {
+        found = true;
+      }
+    })
+    
     const docRef = doc(db, 'users', id);
-
+    
     // Check if favorite exists in favs array
     if(found) {
       yield call(() => updateDoc(docRef, {
         favorites: arrayRemove(favId),
       }));  
+      console.log('same id found');
+      return;
     }
 
     yield call(() => updateDoc(docRef, {

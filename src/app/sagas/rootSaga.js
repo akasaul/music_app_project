@@ -7,6 +7,7 @@ import fetchRecentSaga from './song/fetchRecentSaga';
 import searchSaga from './song/searchSaga';
 import favSong from './song/favSongSaga';
 import setUserSaga from './user/getUser';
+import getAllSaga from './song/getAllSaga';
 
 export default function* rootSaga() {
   yield all([

@@ -72,7 +72,6 @@ const SongPlayerFooter = () => {
   }
 
 
-
   return (
     <>
       <SongPlayer

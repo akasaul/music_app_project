@@ -16,6 +16,7 @@ const songSlice = createSlice({
     isPlaying: false,
   },
   reducers: {
+    // Searching reducers
     searchRequest: (state, action) => {
       state.isLoading = true;
       state.currentState = 'SEARCH';

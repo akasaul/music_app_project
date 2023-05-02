@@ -13,6 +13,8 @@ import Sidebar from './components/Sidebar';
 import AddSong from "./pages/AddSong";
 import { setUserReq } from "./app/features/user/userSlice";
 import useAuthStatus from "./hooks/useAuthStatus";
+import { getAllReq } from "./app/features/song/songSlice";
+import FavoriteSongs from "./pages/FavoriteSongs";
 
 function App() {
 
@@ -52,6 +54,7 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/add-song' element={<AddSong />} />
         <Route path='/edit/:songId' element={<AddSong isEdit={true} />} />
+        <Route path='/favorites' element={<FavoriteSongs />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
 

@@ -26,8 +26,6 @@ const RecentSongs = () => {
 
   const { recents, isLoading, isError, currentState  } = useSelector(state => state.song);
 
-  console.log(isLoading);
-
   return (
     <Flex
       flexDirection='column'

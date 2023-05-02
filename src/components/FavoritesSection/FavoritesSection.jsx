@@ -1,0 +1,57 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, Flex } from "rebass";
+import { Spinner } from "theme-ui";
+import { getAllReq } from "../../app/features/song/songSlice";
+import useAuthStatus from "../../hooks/useAuthStatus"
+import BaseCard from "../BaseCard";
+
+const FavoritesSection = () => {
+
+  const {isChecking, isLoggedIn} = useAuthStatus();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllReq());
+  }, []);
+
+  const { songs } = useSelector(state => state.song);
+  const { favs } = useSelector(state => state.user);
+
+  if(isChecking) {
+    return <Box>
+            <Spinner 
+              color='green'
+            />
+          </Box>
+  }
+
+
+  return (
+    <Box>
+      <h4
+        style={{
+          color: 'white'
+        }}
+      >Songs You Like</h4>
+
+      <Flex
+        flexWrap='wrap'
+        sx={{
+          gap: '20px'
+        }}
+      >
+        {
+          songs.filter(song => favs.includes(song.id)).map((song) => 
+            <BaseCard title={song.title} imageUrl={song.imageUrl} 
+              artist={song.artist} id={song.id}
+            />
+          )
+        }
+      </Flex>
+
+    </Box>
+  )
+}
+
+export default FavoritesSection

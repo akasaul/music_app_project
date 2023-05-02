@@ -16,9 +16,6 @@ const Header = () => {
   const  HeaderText = styled(Box)``;
   const {isLoggedIn, isChecking } = useAuthStatus();
 
-  console.log(isLoggedIn, isChecking);
-
-
   // Modal State
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,7 +33,6 @@ const Header = () => {
     setIsOpen(true);
     setIsLogin(false);
   }
-
 
   return (
     <Box
