@@ -2,7 +2,7 @@ import './header.css';
 import { Box, Button, Flex, Heading, Image, Text } from "rebass";
 import {  MdOutlineNotifications, MdOutlineAlarm, MdOutlineSettings, MdOutlineLogin, MdLogout } from 'react-icons/md';
 import styled from '@emotion/styled';
-import { fontWeight, variant } from 'styled-system';
+import { fontSize, fontWeight, variant } from 'styled-system';
 import PrimaryButton from '../Buttons/PrimaryButton';
 import SecondaryButton from '../Buttons/SecondaryButton';
 import TextButton from '../Buttons/TextButton';
@@ -13,6 +13,7 @@ import { Spinner } from "theme-ui";
 import { useDispatch } from 'react-redux';
 import { signOut } from '../../app/features/auth/authSlice';
 import { auth } from '../../firebase/firebase';
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({isHome}) => {
   const  HeaderText = styled(Box)``;
@@ -53,14 +54,20 @@ const Header = ({isHome}) => {
 
   const LogoText = styled(Text)`
     ${fontWeight}
-    font-size: 24px;
+    ${fontSize}
     color: #fff;
   `;
 
   const Logo = styled(Flex)`
     align-items: center;
+    cursor: pointer;
   `;
+  
+  const navigate = useNavigate();
 
+  const navigateHome = () => {
+    navigate('/');
+  }
 
   return (
     <Box
@@ -83,17 +90,15 @@ const Header = ({isHome}) => {
           Good Day
         </HeaderText> : 
         <Logo
+          onClick={navigateHome}
           sx={{gap: '10px'}}
         >
           <Image 
             p={'2px'}
-            height='50px'
+            height={['45px']}
             src={'https://cdn-icons-png.flaticon.com/512/733/733629.png?w=740&t=st=1683133883~exp=1683134483~hmac=aabbec39296eec0e14eb112817017df1c3b39a643ecb19f3f2edfb53cbc43da5'}
-            sx={{background: 'white', borderRadius: '50%'}}
+            sx={{background: '#1ED760', borderRadius: '50%'}}
             />
-            <LogoText
-              fontWeight={700}
-            >Nikofy</LogoText>
         </Logo>
       }
 

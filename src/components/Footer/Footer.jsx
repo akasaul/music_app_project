@@ -73,7 +73,6 @@ const Footer = () => {
         </Text>
       </IconButton>
 
-
       <IconButton
         variant='iconButton'
         onClick={() => handleClick('/favorites')}

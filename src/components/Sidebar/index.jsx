@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
-import { MdAdd, MdFavorite, MdHome, MdLibraryMusic, MdOutlineFavoriteBorder, MdOutlineHome, MdOutlineLibraryBooks, MdOutlineLibraryMusic, MdSearch } from "react-icons/md";
-import { Box , Flex, Text} from "rebass"
+import { MdAdd, MdOutlineFavoriteBorder, MdOutlineHome, MdOutlineLibraryMusic, MdSearch } from "react-icons/md";
+import { Box , Flex} from "rebass"
 import { color } from "styled-system"
 import ListTile from '../ListTile';
 

@@ -39,7 +39,8 @@ const FavoriteSongs = () => {
       className="home"
       marginTop='10px'
       style={{
-        width: '100%'
+        width: '100%',
+        flex: 1
       }}
     >
       <Header />
@@ -71,8 +72,9 @@ const FavoriteSongs = () => {
           </Flex>
          :favSongs.map((song, index) => 
             <SongTile imageUrl={song.imageUrl} title={song.title} index={index}
-              duration={song.duration} artist={song.artist} album={song.album}
-              id={song.id} 
+              duration={song.duration} artist={song.artist.name || song.artist} album={song.album.title || song.album}
+              id={song.id}
+              key={song.id}
             />
             ) : 
 
@@ -120,7 +122,8 @@ const FavoriteSongs = () => {
            : 
           songs.map((song, index) => 
             <SongTile imageUrl={song.imageUrl} title={song.title} index={index}
-              duration={song.duration} artist={song.artist} album={song.album}
+            key={song.id}
+              duration={song.duration} artist={song.artist?.name || song.artist} album={song.album?.title || song.album}
               id={song.id}
             />
             )

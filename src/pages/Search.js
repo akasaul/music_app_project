@@ -42,10 +42,12 @@ const Search = () => {
       sx={{
         marginTop: '10px',
         width: '100%',
-        maxWidth: '1000px'
+        maxWidth: '1000px',
+        flex: 1
       }}
     >
       <Header />
+
       <Container
         className='search-container'
       >
@@ -111,6 +113,11 @@ const Search = () => {
                 artist={searchResults[0]?.artist}
                 imageUrl={searchResults[0]?.imageUrl}
                 title={searchResults[0]?.title} key={searchResults[0]?.id}
+                album={searchResults[0]?.album}
+                duration={searchResults[0]?.duration}
+                genre={searchResults[0]?.genre}
+                id={searchResults[0]?.id}
+
               />
             </Box>
 
@@ -141,6 +148,7 @@ const Search = () => {
 
           </Flex>
       }
+      
       {
         !query &&
         <Box
@@ -162,6 +170,7 @@ const Search = () => {
     >
       Recent Songs
     </RecentText>
+
       <Slider 
         songs={songs}
       />

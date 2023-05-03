@@ -146,9 +146,16 @@ const SongPlayerFooter = () => {
             gap: '10px'
           }}
         >
-          <MdFavoriteBorder 
-            size={24}
-          />
+          {
+            favs.includes(song.id) ?
+            <MdFavorite 
+              onClick={toggleFav}
+              size={24}/>
+              :
+              <MdFavoriteBorder 
+              onClick={toggleFav}
+              size={24}/> 
+          }
           {
             play ?
             <MdPause 

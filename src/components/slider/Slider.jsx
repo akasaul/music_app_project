@@ -23,7 +23,7 @@ const Slider = ({songs}) => {
           paddingBlock: '1rem'
         }}
       >
-        {(Array.from({ length: 5 })).map((_, i) => (
+        {Array.from({ length: 5 }).map((_, i) => (
           i < songs.length && 
           <li
             style={{
@@ -40,7 +40,7 @@ const Slider = ({songs}) => {
             <BaseCard 
               imageUrl={songs[i]?.imageUrl}
               album={songs[i]?.album}
-              artist={songs[i]?.artist}
+              artist={songs[i]?.artist?.name}
               duration={songs[i]?.duration}
               genre={songs[i]?.genre}
               id={songs[i]?.id}
@@ -51,33 +51,33 @@ const Slider = ({songs}) => {
         ))}
       </ul>
 
-        <div className='slider_controller'>
+      {/* <div className='slider_controller'>
 
-           <button className='slider_btn' onClick={() => prev()}>
-             <MdArrowLeft />
-           </button>
+          <button className='slider_btn' onClick={() => prev()}>
+            <MdArrowLeft />
+          </button>
 
-           <ol style={{ display: 'flex' }}>
+          <ol style={{ display: 'flex' }}>
 
-             {pages.map((_, i) => (
-               <li key={i} className='slide_marker'>
-                 <button
-                   className='page_index'
-                   style={i !== activePageIndex ? { opacity: 0.5 } : {}}
-                   onClick={() => goTo(i)}
-                 >
-                 </button>
-               </li>
-             ))}
+            {pages.map((_, i) => (
+              <li key={i} className='slide_marker'>
+                <button
+                  className='page_index'
+                  style={i !== activePageIndex ? { opacity: 0.5 } : {}}
+                  onClick={() => goTo(i)}
+                >
+                </button>
+              </li>
+            ))}
 
-           </ol>
+          </ol>
 
 
-           <button className='slider_btn' onClick={() => next()}>
-             <MdArrowRight />
-           </button>
+          <button className='slider_btn' onClick={() => next()}>
+            <MdArrowRight />
+          </button>
 
-         </div>
+      </div> */}
 
     </div>
   );

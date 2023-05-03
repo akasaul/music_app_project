@@ -9,6 +9,7 @@ import SearchResult from '../components/SearchResult/SearchResult';
 import '../App.css';
 import { auth } from '../firebase/firebase';
 import LoginModal from '../components/LoginModal';
+import Header from '../components/Header';
 
 
 // Generic page used for both editing and adding music 
@@ -167,15 +168,16 @@ const AddSong = ({isEdit}) => {
     }
 
 
-
   return (
     <Box
       className='home'
       sx={{
         width: '100%',
-        marginTop: '10px'
+        marginTop: '10px',
+        flex: 1
       }}
     >
+      <Header />
       {
         !isEdit &&
       <Container
@@ -214,20 +216,19 @@ const AddSong = ({isEdit}) => {
                   }}
                 />
                 <MdSearch 
-                color="white"
-                size={24} 
-              /> 
+                  color="white"
+                  size={24} 
+                /> 
 
 
               {
-
                   songs.length > 0 && query.length > 0 &&
                   <Box 
                     sx={{
                       position: 'absolute',
                       background: '#000',
                       width: '100%',
-                      height: '150px',
+                      maxHeight: '170px',
                       overflowY: 'scroll', 
                       top: '40px',
                       left: '0px',
@@ -241,8 +242,8 @@ const AddSong = ({isEdit}) => {
                       /> :
                       songs.map(song => (
                         <SearchResult key={song?.id} title={song?.title}
-                         imageUrl={song?.album?.cover_big} artist={song?.artist?.name}
-                          duration={song?.duration} album={song?.album?.title} 
+                         imageUrl={song?.album?.cover_big} artist={song?.artist?.name ||  song?.artist}
+                          duration={song?.duration} album={song?.album?.title || song?.album} 
                           setFormData={setFormData} formData={formData}
                         />
                       ))
@@ -443,7 +444,7 @@ const AddSong = ({isEdit}) => {
 
             <Box>
               {
-                imageUrl.length > 0 ?
+                imageUrl?.length > 0 ?
                 <Image
                   src={imageUrl}
                   width='100%'
@@ -461,6 +462,7 @@ const AddSong = ({isEdit}) => {
             maxWidth: '500px',
             marginInline: 'auto',
             marginBlock: '20px',  
+            marginBottom: '6rem'
           }}
         >
           {

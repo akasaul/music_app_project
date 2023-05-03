@@ -4,6 +4,7 @@ import { Box, Button, Flex, Image, Text } from "rebass";
 import { Link } from "react-router-dom";
 import { color } from "styled-system";
 import SongTile from "../components/SongTile/SongTile";
+import Header from '../components/Header';
 import { auth } from "../firebase/firebase";
 import useAuthStatus from "../hooks/useAuthStatus";
 import { Spinner } from "theme-ui";
@@ -33,7 +34,7 @@ const Library = () => {
     }
   `;
 
-  const Header = styled(Text)`
+  const LibraryHeader = styled(Text)`
     margin-block: 1rem;
     color: #fff;
   `; 
@@ -71,22 +72,22 @@ const Library = () => {
       sx={{width: '100%'}}
       className='home'
       marginTop='10px'
+      flex='1'
     >
-
+      <Header />
       {
         isLoggedIn &&
-
         <>
-          <Header
+          <LibraryHeader
             as='h3'
-          >Your Songs</Header>
+          >Your Songs</LibraryHeader>
 
           <SongsContainer
                 >
               { yourSongs.length > 0 ? 
                 yourSongs.map(({album, artist, duration, id, imageUrl, title, genre}, index) => <SongTile 
                   album={album}
-                  artist={artist}
+                  artist={artist?.name || artist}
                   duration={duration}
                   id={id}
                   key={id}
@@ -118,9 +119,9 @@ const Library = () => {
       }
 
 
-      <Header
+      <LibraryHeader
         as='h3'
-      >All Songs</Header>
+      >All Songs</LibraryHeader>
 
       <FilterContainer
         sx={{gap: '10px'}}
@@ -149,8 +150,8 @@ const Library = () => {
           </LoadingBox>
            :
           songs.map(({album, artist, duration, id, imageUrl, title, genre}, index) => <SongTile 
-            album={album}
-            artist={artist}
+            album={album?.title || album}
+            artist={artist?.name || artist}
             duration={duration}
             id={id}
             index={index}

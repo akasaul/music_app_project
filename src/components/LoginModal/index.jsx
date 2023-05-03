@@ -93,14 +93,6 @@ const Container = styled(Flex)`
   const emailRef = useRef();
   const nameRef = useRef();
   const passwordRef = useRef();
-
-  const [errors, setErrors] = useState({
-    nameErr: '',
-    emailErr: '',
-    passwordErr: '',
-  });
-
-  const {nameErr, emailErr, passwordErr} = errors;
   
   // Show Password
   const [showPassword, setShowPassword] = useState(false);
@@ -109,63 +101,8 @@ const Container = styled(Flex)`
 
   const { isLoading, isError, isSuccess, erroMsg } = useSelector(state => state.auth);
 
-
-  // Utitlity for setting error values 
-  function setErrorVal(key, msg){
-
-    setErrors({
-      ...errors,
-      [key]: msg
-    })
-
-  }
-
-  // Error Checking before submission
-  const checkError = (name, email, password) => {
-    if(!isLogin) {
-      if(name.length < 4) {
-
-        setErrorVal('nameErr', 'Name Shouldn\'t be less than 6 characters');
-
-        throw Error('Name Shouldn\'t be less than 6 characters');
-      } else {
-        setErrorVal('nameErr', '');
-      }
-
-
-      const legitEmail = email
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-
-      if(!legitEmail) {
-        setErrorVal('emailErr', 'Enter a valid Email');
-
-        throw Error('Enter a valid Email');
-      } else {
-        setErrorVal('emailErr', '');
-      }
-
-      if(password.length < 6) {
-        setErrorVal('emailErr', 'Enter a valid Email');
-        throw Error('Password shouldn\'t be less than 6 characters');
-      } else {
-        setErrorVal('emailErr', '');
-      }
-
-    }
-    
-  }
-
   // On Form Submission
   const handleSubmit = async (e) => {
-    // try {
-    //   checkError(emailRef.current.value, nameRef.current?.value, passwordRef.current?.value);
-    // } catch(err) {
-    //   console.log(err.message);
-    //   return;
-    // }
 
     e.preventDefault(); 
 
