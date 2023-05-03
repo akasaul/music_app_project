@@ -10,6 +10,12 @@ function* workAddSong () {
 
     const {song} = yield select((state) => state.song);
 
+    const {title, album, artist, duration, imageUrl} = song.formData;
+
+    if(!title || !album || !duration || !artist || !imageUrl ) {
+      throw Error('Please Include required fields');
+    }
+
 
     const res = yield call(() => addDoc(collection(db, 'songs'), {
       ...song.formData, 

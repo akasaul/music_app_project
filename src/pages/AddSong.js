@@ -10,6 +10,8 @@ import '../App.css';
 import { auth } from '../firebase/firebase';
 import LoginModal from '../components/LoginModal';
 import Header from '../components/Header';
+import styled from '@emotion/styled';
+import { color, fontSize, fontWeight } from 'styled-system';
 
 
 // Generic page used for both editing and adding music 
@@ -43,7 +45,7 @@ const AddSong = ({isEdit}) => {
     const {title, artist, album, genre, duration, imageUrl} = formData;
     
     // States from song slice
-    const { songs, isLoading, isSuccess, isError, currentState } = useSelector(state => state.song);
+    const { songs, isLoading, isSuccess, isError, currentState, errorMsg } = useSelector(state => state.song);
 
 
     const dispatch = useDispatch();
@@ -54,83 +56,6 @@ const AddSong = ({isEdit}) => {
       setQuery(e.target.value);
       dispatch(setSearchQuery(e.target.value));
       dispatch(searchRequest(query));
-    }
-
-    // General Error Object
-    const [errors, setErrors] = useState({
-      titleError: '' , 
-      artistError: '',
-      albumError: '',
-      genreError: '',
-      durationError: '',
-      imageUrlError: ''
-    });
-
-    
-    // Utitlity for setting error values 
-    function setErrorVal(key, msg){
-
-      setErrors({
-        ...errors,
-        [key]: msg
-      })
-      
-    }
-
-    const { titleError, albumError, artistError, durationError, genreError, imageUrlError } = errors;
-
-    // Check for errors
-    const validate = () => {
-
-      // if(!title) {
-      //   setErrorVal('titleError', 'Title Can\'t be Empty');
-      //   throw Error('title error');
-      // } else {  
-      //   setErrorVal('artistError', '');
-      // }
-
-      // if(!artist) {
-      //   setErrorVal('artistError', 'Artist Can\'t be Empty');
-      //   throw Error('artist error');
-      // } else {
-      //   setErrorVal('artistError', '');
-      // }
-
-      // if(!album) {
-      //   setErrorVal('albumError', 'Album Can\'t be Empty');
-      //   throw Error('album error');
-      // } else {
-      //   setErrorVal('albumError', '');
-      // }
-
-      // if(!genre) {
-      //   setErrorVal('genreError', 'Genre Can\'t be Empty');
-      //   throw Error('genre error')
-      // } else {
-      //   setErrorVal('genreError', '');
-      // }
-
-      // if(!imageUrl) {
-      //   setErrorVal('imageUrlError', 'URL Can\'t be Empty');
-      //   throw Error('imageUrl error')
-      // }  
-      // else {
-      //   setErrorVal('imageUrlError', '');
-      // }
-
-      // if(!duration) {
-      //   setErrorVal('durationError', 'Duration Can\'t be Empty');
-      //   throw Error('duration error');
-      // }  
-
-      // else if(isNaN(duration)) {
-      //   setErrorVal('durationError', 'Duration Can only be a Number');
-      //   throw Error('duration error');
-      // }
-      // else {
-      //   setErrorVal('durationError', '');
-      // }
-
     }
 
     const [openModal, setOpenModal] = useState();
@@ -167,6 +92,11 @@ const AddSong = ({isEdit}) => {
       navigate('/');  
     }
 
+    const ErrorMessage = styled(Text)`
+      ${color}
+      ${fontWeight}
+      ${fontSize}
+    `;
 
   return (
     <Box
@@ -462,7 +392,10 @@ const AddSong = ({isEdit}) => {
             maxWidth: '500px',
             marginInline: 'auto',
             marginBlock: '20px',  
-            marginBottom: '6rem'
+            marginBottom: '6rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2rem'
           }}
         >
           {
@@ -488,6 +421,16 @@ const AddSong = ({isEdit}) => {
           </SubmitButton>
             
 
+          }
+
+          {
+            isError && currentState === 'ADD' || isError && currentState === 'EDIT' &&
+            <ErrorMessage
+              color='textPrimary'
+              sx={{textAlign: 'center'}}
+            >
+              {errorMsg}
+            </ErrorMessage>
           }
 
         </Box>

@@ -181,7 +181,7 @@ const SongPlayerFooter = () => {
         color={'textPrimary'}
         display={['none', 'none','flex']}
         sx={{
-          height: expand ? '125px' : '80px',
+          height: expand ? '135px' : '80px',
           zIndex: 10  
         }}
       >
@@ -312,7 +312,7 @@ const SongPlayerFooter = () => {
           expand &&
           <SongInfo
             sx={{
-              gap: '10px'
+              gap: '10px',
             }}
           >
             <Text
@@ -328,7 +328,7 @@ const SongPlayerFooter = () => {
                   fontSize: '14px'
                 }}
               >
-                Album: {song.album}
+                Album: {song.album.length > 15 ? `${song.album.slice(0, 15)}...` : song.album}
               </Text>
 
               <Text

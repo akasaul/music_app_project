@@ -131,9 +131,10 @@ const songSlice = createSlice({
       state.isSuccess = true;
     },
 
-    editSongFailure: (state) => {
+    editSongFailure: (state, action) => {
       state.isLoading = false;
       state.isError = true;
+      state.errorMsg = action.payload;
     },
 
     // Delete song reducers 

@@ -14,6 +14,10 @@ function* workEditSong () {
     const docRef = doc(db, 'songs', song.id);
 
     const {title, album, artist, duration, genre, imageUrl} = song.formData;
+
+    if(!title || !album || !artist || !duration || !imageUrl) {
+      throw Error('Please provide the required fields');
+    }
     
     const res = yield call(() => updateDoc(docRef, {
       album,

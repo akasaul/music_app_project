@@ -81,6 +81,14 @@ const Container = styled(Flex)`
     color: white;
   `;
 
+
+  const HeaderSub = styled.h2`
+    ${fontSize}
+    ${width}
+    ${maxWidth}
+    text-align: center;
+    color: white;
+  `;
   const InputContainer = styled(Flex)`
     ${maxWidth}
     gap: 15px;
@@ -163,6 +171,16 @@ const Container = styled(Flex)`
         >
           Start listening with a free Nikofy account
         </HeaderText>
+
+        {
+          !isLogin &&
+            <HeaderSub
+              fontSize={'15px'}
+            >
+              (Just enter unique fake email)
+            </HeaderSub>
+        }
+        
 
         <InputContainer
           flexDirection='column'  
