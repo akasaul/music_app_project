@@ -17,6 +17,7 @@ import { getAllReq } from "./app/features/song/songSlice";
 import FavoriteSongs from "./pages/FavoriteSongs";
 import Search from "./pages/Search";
 import SongPlayerFooter from "./components/SongPlayerFooter/SongPlayerFooter";
+import Library from "./pages/Library";
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
         <Route path='/edit-song' element={<AddSong isEdit={true} />} />
         <Route path='/favorites' element={<FavoriteSongs />} />
         <Route path='/Search' element={<Search />} />
+        <Route path='/library' element={<Library />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
 

@@ -1,14 +1,22 @@
 import styled from "@emotion/styled";
+import { useDispatch } from "react-redux";
 import { Box, Card, Image, Heading, Text} from "rebass";
 import { color, fontFamily, fontSize } from "styled-system";
+import { playSong } from "../../app/features/song/songSlice";
 
-const BaseCard = ({title, imageUrl, artist}) => {
+const BaseCard = ({title, imageUrl, artist, id, album, duration, genre}) => {
   const BasicCard = styled(Card)`
     ${color}
     display: flex;
     flex-direction: column;
     gap: 20px;
     border-radius: 7px;
+    &:hover {
+      cursor: pointer;
+      border: 1px solid green;
+      background: #181818;
+      transition: 200 all ease;
+    }
   `;
 
   const CardHeading = styled(Heading)`
@@ -21,8 +29,15 @@ const BaseCard = ({title, imageUrl, artist}) => {
     ${fontSize}
   `;
 
+  const disptch = useDispatch();
+
+  const startPlay = () => {
+    disptch(playSong({title, artist, imageUrl, album, duration, genre, id}));
+  }
+
   return (
     <BasicCard
+      onClick={startPlay}
       alignItems='center'
       width={['200px']}
       color='textPrimary'

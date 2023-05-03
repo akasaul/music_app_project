@@ -98,7 +98,7 @@ const songSlice = createSlice({
 
     stopSong: (state, action) => {
       state.isPlaying = false;
-      state.song = null;
+      // state.song = null;
     },
 
     // get all songs

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Flex } from "rebass";
+import { Box, Flex, Image, Text } from "rebass";
 import { Spinner } from "theme-ui";
 import { getAllReq } from "../../app/features/song/songSlice";
 import useAuthStatus from "../../hooks/useAuthStatus"
@@ -40,6 +40,23 @@ const FavoritesSection = () => {
         }}
       >Songs You Like</h3>
 
+      {
+        favs.length === 0 &&
+        <Flex
+          alignItems={'center'}
+          sx={{gap: '20px'}}
+        >
+          <Image
+            src={'https://cdn-icons-png.flaticon.com/512/408/408697.png?w=740&t=st=1683050602~exp=1683051202~hmac=b2742b98226da86801474ffa532a4b203cb68486ee2fb1780eba6c9275272bf9'}
+            height={'80px'}
+          />
+          <Text
+            sx={{color: '#fff'}}
+          >You have no favorites</Text>
+        </Flex>
+
+      }
+
       <Flex
         flexWrap='wrap'
         sx={{
@@ -50,6 +67,8 @@ const FavoritesSection = () => {
           songs.filter(song => favs.includes(song.id)).map((song) => 
             <BaseCard title={song.title} imageUrl={song.imageUrl} 
               artist={song.artist} id={song.id}
+              album={song.album} duration={song.duration}
+              genre={song.genre} key={song.id}
             />
           )
         }

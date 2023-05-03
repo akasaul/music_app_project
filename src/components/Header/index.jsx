@@ -1,6 +1,6 @@
 import './header.css';
 import { Box, Button, Heading } from "rebass";
-import {  MdOutlineNotifications, MdOutlineAlarm, MdOutlineSettings } from 'react-icons/md';
+import {  MdOutlineNotifications, MdOutlineAlarm, MdOutlineSettings, MdOutlineLogin, MdLogout } from 'react-icons/md';
 import styled from '@emotion/styled';
 import { variant } from 'styled-system';
 import PrimaryButton from '../Buttons/PrimaryButton';
@@ -10,7 +10,8 @@ import { useState } from 'react';
 import LoginModal from '../LoginModal';
 import useAuthStatus from '../../hooks/useAuthStatus';
 import { Spinner } from "theme-ui";
-
+import { useDispatch } from 'react-redux';
+import { signOut } from '../../app/features/auth/authSlice';
 
 const Header = () => {
   const  HeaderText = styled(Box)``;
@@ -32,6 +33,12 @@ const Header = () => {
   const onSignUp = () => {
     setIsOpen(true);
     setIsLogin(false);
+  }
+
+  const dispatch = useDispatch();
+
+  const Logout = () => {
+    dispatch(signOut());
   }
 
   return (
@@ -67,7 +74,8 @@ const Header = () => {
             color='white'
             size={30}
           />
-          <MdOutlineSettings
+          <MdLogout
+            onClick={Logout}
             color='white'
             size={30}
           />

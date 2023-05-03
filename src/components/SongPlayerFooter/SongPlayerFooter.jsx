@@ -1,10 +1,11 @@
 import styled from "@emotion/styled"
 import { useState } from "react";
-import { MdExpandLess, MdExpandMore, MdFavorite, MdFavoriteBorder, MdMore, MdOutlineFavorite, MdOutlinePlayArrow, MdPause, MdPlayArrow, MdPlayCircle, MdSkipNext, MdSkipPrevious } from "react-icons/md";
+import { MdClose, MdExpandLess, MdExpandMore, MdFavorite, MdFavoriteBorder, MdMore, MdOutlineFavorite, MdOutlinePlayArrow, MdPause, MdPlayArrow, MdPlayCircle, MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Flex, Text } from "rebass"
 import { display, fontSize, position } from "styled-system";
 import { Image } from "theme-ui";
+import { stopSong } from "../../app/features/song/songSlice";
 import { setFavs, setFavsReq } from "../../app/features/user/userSlice";
 import useAuthStatus from "../../hooks/useAuthStatus";
 import { formatTime } from "../../utils/formatTime";
@@ -77,6 +78,10 @@ const SongPlayerFooter = () => {
       return;
     }
     dispatch(setFavsReq(song.id));
+  }
+
+  const closePlayer = () => {
+    dispatch(stopSong());
   }
 
 
@@ -243,15 +248,21 @@ const SongPlayerFooter = () => {
 
         <Flex 
           alignItems='center'
+          flexDirection='column'
+          justifyContent='center'
           sx={{
             gap: '10px'
           }}
         >
           {
             expand ?
-            <MdExpandLess size={32}  onClick={() => setExpand(false)}/> : 
-            <MdExpandMore size={32}  onClick={() => setExpand(true)}/> 
+            <MdExpandLess size={32}  onClick={() => setExpand(false)} style={{cursor: 'pointer'}} /> : 
+            <MdExpandMore size={32}  onClick={() => setExpand(true)} style={{cursor: 'pointer'}} /> 
           }
+
+          <MdClose size={24} style={{cursor: 'pointer'}}
+            onClick={closePlayer}
+          />
         </Flex>
         
         {

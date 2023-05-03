@@ -8,6 +8,8 @@ function* workFavSong () {
 
   const {favId} = yield select((state) => state.user);
 
+  console.log(favId);
+
   // Optimistic ui Update 
   
   yield put(setFavs(favId));    

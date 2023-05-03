@@ -238,9 +238,9 @@ const AddSong = ({isEdit}) => {
                         color='green'
                       /> :
                       songs.map(song => (
-                        <SearchResult key={song.id} title={song.title}
-                         imageUrl={song.album.cover_big} artist={song.artist.name}
-                          duration={song.duration} album={song.album.title} 
+                        <SearchResult key={song?.id} title={song?.title}
+                         imageUrl={song?.album?.cover_big} artist={song?.artist?.name}
+                          duration={song?.duration} album={song?.album?.title} 
                           setFormData={setFormData} formData={formData}
                         />
                       ))

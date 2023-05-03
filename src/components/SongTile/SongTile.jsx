@@ -48,7 +48,7 @@ const SongTile = ({imageUrl, title, duration, artist, album, index, id, isSearch
     ${fontWeight}  
   `;
 
-  const {isLoggedIn} = useAuthStatus();
+  const {isLoggedIn, isChecking} = useAuthStatus();
 
   // Song duration formatted
   const time = formatTime(duration);
@@ -57,7 +57,7 @@ const SongTile = ({imageUrl, title, duration, artist, album, index, id, isSearch
   const {favs} = useSelector(state => state.user);
 
   const toggleFav = () => {
-    if(!isLoggedIn) {
+    if(!isChecking && !isLoggedIn) {
       setOpenModal(true);
       return;
     }
@@ -106,9 +106,10 @@ const SongTile = ({imageUrl, title, duration, artist, album, index, id, isSearch
     disptch(playSong({title, artist, imageUrl, album, duration, genre, id}));
   }
 
-
   return (
+    <Flex>
     <Tile
+      flex='1'
       onClick={startPlay  }
       sx={{
         gap: '20px',
@@ -161,7 +162,7 @@ const SongTile = ({imageUrl, title, duration, artist, album, index, id, isSearch
             flex='1'
             display={['none', 'none', 'none', 'block']}
           >
-            {album.length > 13 ? `${album.slice(0, 13)}..`: album }
+            {album?.length > 13 ? `${album?.slice(0, 13)}..`: album }
           </Time>
         }
 
@@ -186,19 +187,7 @@ const SongTile = ({imageUrl, title, duration, artist, album, index, id, isSearch
       >
         {time}
       </Time>
-
-      {
-        isLoggedIn &&
-          <button
-            className='more'
-            onClick={toggleOption}
-          >
-            <MdMoreVert 
-              color='white'
-            />
-          </button>
-      }
-
+   
       {
         showOption &&
         <Box className='more_options'>
@@ -231,6 +220,19 @@ const SongTile = ({imageUrl, title, duration, artist, album, index, id, isSearch
 
       <LoginModal isOpen={openModal} setIsOpen={setOpenModal} />
     </Tile>
+      {
+        isLoggedIn &&
+          <button
+            className='more'
+            onClick={toggleOption}
+          >
+            <MdMoreVert 
+              color='white'
+            />
+          </button>
+      }
+
+    </Flex>
   )
 }
 

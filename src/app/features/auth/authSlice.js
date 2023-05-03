@@ -57,6 +57,11 @@ const authSlice = createSlice({
       state.errorMsg = action.payload;
     },
 
+    // signOut 
+    signOut: (state, action) => {
+      state.auth = null;
+    },
+
     // reset all states  
     reset: (state) => {
       state.isLoading = false;
@@ -68,6 +73,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { test, signUpFalure, signUpRequest, signUpSuccess, setUserData, signInFalure, signInRequest, signInSuccess, reset } = authSlice.actions;
+export const { test, signUpFalure, signUpRequest, signUpSuccess, setUserData, signInFalure, signInRequest, signInSuccess, signOut, reset } = authSlice.actions;
 
 export default authSlice.reducer;

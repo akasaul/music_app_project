@@ -113,7 +113,7 @@ const index = () => {
 
       </ListTile>
 
-      <ListTile text={'Library'} link={'/library'}>
+      <ListTile text={'Library'} link={'/library'} askLogin={true}>
         {/* display d/t Icon sizes at view ports */}
         <Box
             display={['none', 'block', 'none']}

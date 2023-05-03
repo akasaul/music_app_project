@@ -11,7 +11,6 @@ const SideBar = () => {
     <SideBar 
       display={['none', 'flex ']}
       bg='white'
-      // flex={['none', '1']}
       width='200px'
     >SideBar</SideBar>
   )

@@ -10,6 +10,7 @@ import setUserSaga from './user/getUser';
 import getAllSaga from './song/getAllSaga';
 import editSong from './song/editSongSaga';
 import deleteSong from './song/deleteSongSaga';
+import signOutSaga from './auth/signOutSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -23,5 +24,6 @@ export default function* rootSaga() {
     getAllSaga(),
     editSong(),
     deleteSong(),
+    signOutSaga()
   ])
 }

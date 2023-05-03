@@ -9,10 +9,10 @@ function* workAddSong () {
   try {
 
     const {song} = yield select((state) => state.song);
-    
+
 
     const res = yield call(() => addDoc(collection(db, 'songs'), {
-      ...song, 
+      ...song.formData, 
       playlists: [], 
       timeStamp: serverTimestamp(),
       postedBy: doc(db, `/users/${auth.currentUser.uid}`)

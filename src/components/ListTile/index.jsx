@@ -6,7 +6,7 @@ import { Button, Link } from "rebass";
 import { useNavigate } from "react-router-dom";
 
 
-const ListTile = ({text,link,  children}) => {
+const ListTile = ({text, link, children}) => {
 
   const TileText = styled(Text)`
   ${color}
@@ -30,13 +30,18 @@ const ListTile = ({text,link,  children}) => {
 
   const navigate = useNavigate();
 
+  const onClick = () => {
+    navigate(link);
+  }
+
   return (
     <ListTileContainer
-      onClick={() => navigate(link)}
+      onClick={onClick}
     >
 
       <ListTile
           alignItems='center'
+          className='list_tile'
           sx={{
             gap: '10px'
           }}
