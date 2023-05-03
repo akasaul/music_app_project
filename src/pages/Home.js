@@ -15,7 +15,7 @@ const Home = () => {
     max-width: 950px;
     
   `;
-  
+
   return (
     <Home
       display='flex'

@@ -73,7 +73,6 @@ const FavoritesSection = () => {
 
   return (
     <Box>
-      
       <Header>
         <Title
           fontSize='md'
@@ -107,7 +106,6 @@ const FavoritesSection = () => {
             sx={{color: '#fff'}}
           >You have no favorites</Text>
         </Flex>
-
       }
 
       {

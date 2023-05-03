@@ -1,8 +1,8 @@
 import './header.css';
-import { Box, Button, Heading } from "rebass";
+import { Box, Button, Flex, Heading, Image, Text } from "rebass";
 import {  MdOutlineNotifications, MdOutlineAlarm, MdOutlineSettings, MdOutlineLogin, MdLogout } from 'react-icons/md';
 import styled from '@emotion/styled';
-import { variant } from 'styled-system';
+import { fontWeight, variant } from 'styled-system';
 import PrimaryButton from '../Buttons/PrimaryButton';
 import SecondaryButton from '../Buttons/SecondaryButton';
 import TextButton from '../Buttons/TextButton';
@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 import { signOut } from '../../app/features/auth/authSlice';
 import { auth } from '../../firebase/firebase';
 
-const Header = () => {
+const Header = ({isHome}) => {
   const  HeaderText = styled(Box)``;
   const {isLoggedIn, isChecking } = useAuthStatus();
 
@@ -51,24 +51,51 @@ const Header = () => {
     dispatch(signOut());
   }
 
+  const LogoText = styled(Text)`
+    ${fontWeight}
+    font-size: 24px;
+    color: #fff;
+  `;
+
+  const Logo = styled(Flex)`
+    align-items: center;
+  `;
+
 
   return (
     <Box
-      display='flex'
+      display='flex'  
       alignItems='center'
       justifyContent='space-between'
       px='10px'
+      my={3}
     >
-      <HeaderText 
-        py='1rem'
-        fontSize={['md', 'lg']}
-        fontFamily='dmSans'
-        flex='1'
-        fontWeight='semiBold'
-        color='textPrimary'
-      >
-        Good Day
-      </HeaderText>
+      {
+        isHome ?
+        <HeaderText 
+          py='1rem'
+          fontSize={['md', 'lg']}
+          fontFamily='dmSans'
+          flex='1'
+          fontWeight='semiBold'
+          color='textPrimary'
+        >
+          Good Day
+        </HeaderText> : 
+        <Logo
+          sx={{gap: '10px'}}
+        >
+          <Image 
+            p={'2px'}
+            height='50px'
+            src={'https://cdn-icons-png.flaticon.com/512/733/733629.png?w=740&t=st=1683133883~exp=1683134483~hmac=aabbec39296eec0e14eb112817017df1c3b39a643ecb19f3f2edfb53cbc43da5'}
+            sx={{background: 'white', borderRadius: '50%'}}
+            />
+            <LogoText
+              fontWeight={700}
+            >Nikofy</LogoText>
+        </Logo>
+      }
 
       {
         isLoggedIn && !isChecking ?
@@ -84,7 +111,7 @@ const Header = () => {
           />
 
           <ProfileContainer>
-              {auth.currentUser.displayName[0]}
+              {auth.currentUser?.displayName?.at(0)?.toUpperCase()}
           </ProfileContainer>
 
           <MdLogout

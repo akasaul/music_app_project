@@ -173,7 +173,7 @@ const AddSong = ({isEdit}) => {
       className='home'
       sx={{
         width: '100%',
-        marginTop: '1rem'
+        marginTop: '10px'
       }}
     >
       {

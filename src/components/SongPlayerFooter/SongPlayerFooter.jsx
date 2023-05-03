@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 import { useState } from "react";
-import { MdClose, MdEdit, MdExpandLess, MdExpandMore, MdFavorite, MdFavoriteBorder, MdMore, MdOutlineFavorite, MdOutlinePlayArrow, MdPause, MdPlayArrow, MdPlayCircle, MdSkipNext, MdSkipPrevious } from "react-icons/md";
+import { MdClose, MdEdit, MdExpandLess, MdExpandMore, MdFavorite, MdFavoriteBorder, MdMore, MdOutlineFavorite, MdOutlinePlayArrow, MdPause, MdPauseCircle, MdPlayArrow, MdPlayCircle, MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Flex, Text } from "rebass"
@@ -61,6 +61,7 @@ const SongPlayerFooter = () => {
   `
 
   const [ play, setPlay ] = useState(true);
+
   const [openModal, setOpenModal] = useState(false);
 
   const [expand, setExpand] = useState(false);
@@ -102,6 +103,10 @@ const SongPlayerFooter = () => {
     navigate(`/edit-song?id=${song.id}&&imageUrl=${song.imageUrl}&&title=${song.title}&&artist=${song.artist}&&album=${song.album}&&duration=${song.duration}`)
   }
 
+  const togglePlay = (playing) => {
+    setPlay(playing);
+  }
+
   return (
     <>
       <SongPlayer
@@ -114,11 +119,11 @@ const SongPlayerFooter = () => {
           src={song.imageUrl}
           height={'100%'}
           width={['40px', '70px']}
+          className={play && 'play_rotate'}
           sx={{
-            borderRadius: '10px'
+            borderRadius: play ? '50%' : '10px',
           }}
-        />
-
+        /> 
 
         <Flex
           flexDirection='column'
@@ -145,15 +150,22 @@ const SongPlayerFooter = () => {
             size={24}
           />
           {
-            isPlaying ?
+            play ?
             <MdPause 
               size={26}
-            /> :
+              onClick={() => setPlay(false)}
+              style={{cursor: 'pointer'}}
+              /> :
             <MdPlayArrow 
               size={26}
-            />
+              onClick={() => setPlay(true)}
+              style={{cursor: 'pointer'}}
+              />
           }
+        <MdClose size={24} style={{cursor: 'pointer'}}
+        onClick={closePlayer} />
         </Flex>
+        
       </SongPlayer>
 
       <SongPlayerDesktop
@@ -166,7 +178,6 @@ const SongPlayerFooter = () => {
           zIndex: 10  
         }}
       >
-
         <Flex
           sx={{
             gap: '30px',
@@ -176,8 +187,9 @@ const SongPlayerFooter = () => {
             src={song.imageUrl}
             height={'100%'}
             width={['60px']}
+            className={play && 'play_rotate'}
             sx={{
-              borderRadius: '10px',
+              borderRadius: play ? '50%' : '10px',
             }}
           />
 
@@ -227,16 +239,22 @@ const SongPlayerFooter = () => {
           }}
         >
 
-          <Flex
+        <Flex
           alignItems='center'
           sx={{
             gap: '20px'
-          }}
-          >
+          }}>
             <MdSkipPrevious size={36} className='btn' />
-            <MdPlayCircle size={42}
-              className="play_button"
-            />
+            {
+              play ? 
+              <MdPauseCircle size={42}
+                onClick={() => togglePlay(false)}
+                className='play_button'
+              /> : <MdPlayCircle size={42}
+                onClick={() => togglePlay(true)}
+              className='play_button'
+              /> 
+            }
             <MdSkipNext size={36} className='btn' />
           </Flex>
 

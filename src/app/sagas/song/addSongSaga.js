@@ -18,7 +18,6 @@ function* workAddSong () {
       postedBy: doc(db, `/users/${auth.currentUser.uid}`)
     }));
 
-    console.log(res);
 
     yield put(addSongSuccess());    
 

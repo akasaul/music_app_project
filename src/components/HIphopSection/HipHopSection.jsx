@@ -34,10 +34,6 @@ const HiphopSection = () => {
           </Box>
   }
 
-  if(!isLoggedIn) {
-    return;
-  }
-
   const Title = styled(Text)`
   ${fontSize}
   ${fontWeight}
@@ -92,10 +88,7 @@ const HiphopSection = () => {
       
       </Header>
 
-      {
-        isLoggedIn &&
-          <Slider songs={songs.filter(song => song?.genre?.toLowerCase()?.includes('hiphop'))}/>
-      }
+      <Slider songs={songs.filter(song => song?.genre?.toLowerCase()?.includes('hiphop'))}/>
 
     </Box>
   )

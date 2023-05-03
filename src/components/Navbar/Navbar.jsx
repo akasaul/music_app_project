@@ -11,21 +11,8 @@ const Navbar = () => {
     <Box
       as='nav'
       width='100%'
-      // flex={['none', '1']}
     >
-      <Header />
-      {/* Navbar */}
-
-
-      {/* <div style={{
-        display: 'flex',
-        gap: '1rem'
-
-      }}> */}
-        {/* <SongCard />
-        <SongCard />
-        <SongCard /> */}
-      {/* </div> */}
+      <Header  isHome={true} />
     </Box>
   )
 }

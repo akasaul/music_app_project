@@ -17,7 +17,7 @@ function* workAuth () {
       displayName: inputName
     }));
 
-    console.log(res);
+    // console.log(res);
 
     const response = yield call(() => addDoc(collection(db, 'users'), {
       name: inputName, 

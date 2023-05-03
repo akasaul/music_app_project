@@ -21,7 +21,6 @@ function* workDeleteSong () {
     yield put(deleteSongSuccess());    
 
   } catch(err) {
-    console.log(err);
     yield put(deleteSongFailure(songsBeforeDeletion));
   }
 }

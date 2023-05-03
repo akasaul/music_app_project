@@ -15,3 +15,27 @@
   transition: all 200ms ease-in-out;
   transform: scale(110%);
 }
+
+
+.play_rotate {
+  /* Cross browser styles */
+  -webkit-animation: rotate 5s linear infinite;
+  -moz-animation: rotate 5s linear infinite;
+  animation: rotate 5s linear infinite;
+}
+
+/* Cross browser styles */
+@-moz-keyframes rotate { 
+  100% { -moz-transform: rotate(360deg); } 
+}
+
+/* Cross browser styles */
+@-webkit-keyframes rotate { 
+  100% { -webkit-transform: rotate(360deg); } 
+}
+@keyframes rotate { 
+  100% { 
+      -webkit-transform: rotate(360deg); 
+      transform:rotate(360deg); 
+  } 
+}

@@ -13,7 +13,7 @@
   filter: brightness(105%);
 }
 
-@media (min-width: 600px) {
+@media (min-width: 750px) {
   .songCard:hover >.play_button {
     transition: all 500 ease;
     opacity: 1;

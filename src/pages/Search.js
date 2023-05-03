@@ -9,6 +9,7 @@ import TopResultCard from '../components/TopResultCard/TopResultCard'
 import Slider from '../components/slider/Slider';
 import styled from "@emotion/styled";
 import { color, fontSize, fontWeight } from "styled-system";
+import Header from "../components/Header";
 
 const Search = () => {
 
@@ -39,11 +40,12 @@ const Search = () => {
     <Box
       className='home'
       sx={{
-        marginTop: '20px',
+        marginTop: '10px',
         width: '100%',
         maxWidth: '1000px'
       }}
     >
+      <Header />
       <Container
         className='search-container'
       >
@@ -75,7 +77,6 @@ const Search = () => {
             style={{
               display: 'grid',
               placeContent: 'center',
-              height: '200px'
             }}
           >
               <Spinner 

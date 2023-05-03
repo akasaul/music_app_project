@@ -48,10 +48,10 @@ const SongCard = ({artist, id, imageUrl, title, album, duration, genre}) => {
       alignItems='center'
       flex='1'
       className='songCard'
-      minWidth={'150px'}      
+      minWidth={['100px', '120px', '140px']}      
     >
       <Image 
-        mr={[2, 1, 3]}
+        mr={[2, 1, 1, 3]}
         src={imageUrl}
         height={['55px', '55px', '80px']}
         width={['55px', '55px', '80px']}

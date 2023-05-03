@@ -8,8 +8,6 @@ function* workSearch () {
 
     const {query} = yield select((state) => state.song);
 
-    console.log(query);
-
     const options = {
       method: 'GET',
       url: process.env.REACT_APP_API_URL,

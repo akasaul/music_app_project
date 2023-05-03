@@ -1,14 +1,17 @@
 import styled from "@emotion/styled";
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Box, Button, Flex, Image, Text } from "rebass";
 import { Link } from "react-router-dom";
 import { color } from "styled-system";
 import SongTile from "../components/SongTile/SongTile";
 import { auth } from "../firebase/firebase";
 import useAuthStatus from "../hooks/useAuthStatus";
+import { Spinner } from "theme-ui";
+import { useEffect } from "react";
+import { getAllReq, reset } from "../app/features/song/songSlice";
 
 const Library = () => {
-  const { songs } = useSelector(state => state.song);
+  const { songs, isLoading, currentState } = useSelector(state => state.song);
   
   const SongsContainer = styled(Box)`
     width: 100%;
@@ -46,14 +49,28 @@ const Library = () => {
 
   const { isLoggedIn } = useAuthStatus();
 
-  const yourSongs = songs.filter(song => song.postedBy === auth.currentUser.uid);
+  const yourSongs = songs.filter(song => song?.postedBy === auth.currentUser?.uid);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(reset());
+    dispatch(getAllReq());
+  }, [dispatch]);
+
+  const LoadingBox = styled(Box)`
+    width: 60%;
+    height: 50vh;
+    display: grid;
+    place-content: center;
+  `;
 
   return (
     <Flex
       flexDirection='column'
       sx={{width: '100%'}}
       className='home'
-      marginTop='1rem'
+      marginTop='10px'
     >
 
       {
@@ -111,6 +128,7 @@ const Library = () => {
         {
           genres.map(genre => 
             <FilterButton
+              key={genre}
               color='textSecondary'
             >
               {genre}
@@ -123,6 +141,13 @@ const Library = () => {
       <SongsContainer
       >
         {
+          isLoading && currentState === 'GET_ALL' ? 
+          <LoadingBox>
+            <Spinner 
+              color='green'
+            />
+          </LoadingBox>
+           :
           songs.map(({album, artist, duration, id, imageUrl, title, genre}, index) => <SongTile 
             album={album}
             artist={artist}

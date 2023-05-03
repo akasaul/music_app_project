@@ -11,8 +11,6 @@ function* workEditSong () {
 
     const {song} = yield select((state) => state.song);
 
-    console.log(song);
-
     const docRef = doc(db, 'songs', song.id);
 
     const {title, album, artist, duration, genre, imageUrl} = song.formData;
@@ -26,12 +24,9 @@ function* workEditSong () {
       title 
     }));
 
-    console.log(res);
-
     yield put(editSongSuccess());    
 
   } catch(err) {
-    console.log(err);
     yield put(editSongFailure(err.message));
   }
 }

@@ -17,7 +17,7 @@ const index = () => {
   return (
     <Container
       display={['none', 'flex']}
-      width={['auto', '80px', 'max(25%, 175px)']}
+      width={['auto', '80px', 'max(25%, 120px)']}
       flexDirection='column'
       alignItems='center'
     >

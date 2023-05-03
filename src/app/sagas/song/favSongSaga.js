@@ -8,8 +8,6 @@ function* workFavSong () {
 
   const {favId} = yield select((state) => state.user);
 
-  console.log(favId);
-
   // Optimistic ui Update 
   
   yield put(setFavs(favId));    
@@ -42,7 +40,6 @@ function* workFavSong () {
       yield call(() => updateDoc(docRef, {
         favorites: arrayRemove(favId),
       }));  
-      console.log('same id found');
       return;
     }
 
@@ -51,7 +48,6 @@ function* workFavSong () {
     }));  
 
   } catch(err) {
-    console.log(err);
     yield put(setFavsError(favId));    
   }
 

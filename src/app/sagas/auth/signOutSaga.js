@@ -9,7 +9,7 @@ function* workAuth () {
     yield call(() => signOut(auth));
 
   } catch(err) {
-    console.log(err);
+    // console.log(err);
   }
 }
 

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { MdHome, MdLibraryMusic, MdOutlineSearch } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { MdFavorite, MdHome, MdLibraryMusic, MdOutlineSearch } from "react-icons/md";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Flex, Text } from "rebass";
 import { buttonStyle, color} from "styled-system";
 
@@ -18,13 +18,13 @@ const Footer = () => {
     ${buttonStyle}
   `;
 
-
   const navigate = useNavigate();
-
 
   const handleClick = (link) => {
     navigate(link);
   }
+
+  const location = useLocation();
 
   return (
     <Footer
@@ -35,6 +35,7 @@ const Footer = () => {
       display={['flex', 'none']}
     >
       <IconButton
+        className={`${location.pathname === '/' && 'list_tile'}`}
         onClick={() => handleClick('/')}
         variant='iconButton'
       >
@@ -47,6 +48,7 @@ const Footer = () => {
       </IconButton>
 
       <IconButton
+        className={`${location.pathname === '/search' && 'list_tile'}`}
         onClick={() => handleClick('/search')}
         variant='iconButton'
       >
@@ -61,12 +63,27 @@ const Footer = () => {
       <IconButton
         variant='iconButton'
         onClick={() => handleClick('/library')}
+        className={`${location.pathname === '/library' && 'list_tile'}`}
       >
         <MdLibraryMusic size={28} />
         <Text
           fontSize='xs'
         >
           Library
+        </Text>
+      </IconButton>
+
+
+      <IconButton
+        variant='iconButton'
+        onClick={() => handleClick('/favorites')}
+        className={`${location.pathname === '/favorites' && 'list_tile'}`}
+      >
+        <MdFavorite size={28} />
+        <Text
+          fontSize='xs'
+        >
+          Favorites
         </Text>
       </IconButton>
 
