@@ -18,7 +18,8 @@ import FavoriteSongs from "./pages/FavoriteSongs";
 import Search from "./pages/Search";
 import SongPlayerFooter from "./components/SongPlayerFooter/SongPlayerFooter";
 import Library from "./pages/Library";
-import 'swiper/css';
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 
 function App() {

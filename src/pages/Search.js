@@ -6,6 +6,9 @@ import { Container, Input, Spinner } from "theme-ui"
 import { getAllReq, reset, searchSong } from "../app/features/song/songSlice";
 import SongTile from "../components/SongTile/SongTile";
 import TopResultCard from '../components/TopResultCard/TopResultCard'
+import Slider from '../components/slider/Slider';
+import styled from "@emotion/styled";
+import { color, fontSize, fontWeight } from "styled-system";
 
 const Search = () => {
 
@@ -24,6 +27,13 @@ const Search = () => {
     setQuery(e.target.value);
     dispatch(searchSong(query));
   }
+
+  const RecentText = styled(Text)`
+    ${color}
+    ${fontSize}
+    ${fontWeight}
+    margin-block: 1rem;
+  `;
 
   return (
     <Box
@@ -142,6 +152,18 @@ const Search = () => {
             <h4 style={{color: '#fff', textAlign: 'center'}}>Search songs..</h4>
         </Box>
       }
+
+
+    <RecentText
+      color='textPrimary'
+      fontSize='md'
+      fontWeight='semiBold'
+    >
+      Recent Songs
+    </RecentText>
+      <Slider 
+        songs={songs}
+      />
     </Box>
   )
 }

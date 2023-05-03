@@ -84,3 +84,4 @@ const Slider = ({songs}) => {
 };
 
 export default Slider;
+

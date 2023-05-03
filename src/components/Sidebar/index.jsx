@@ -1,5 +1,5 @@
 import styled from "@emotion/styled"
-import { MdAdd, MdFavorite, MdHome, MdLibraryMusic, MdSearch } from "react-icons/md";
+import { MdAdd, MdFavorite, MdHome, MdLibraryMusic, MdOutlineFavoriteBorder, MdOutlineHome, MdOutlineLibraryBooks, MdOutlineLibraryMusic, MdSearch } from "react-icons/md";
 import { Box , Flex, Text} from "rebass"
 import { color } from "styled-system"
 import ListTile from '../ListTile';
@@ -39,7 +39,8 @@ const index = () => {
         <Box
           display={['none', 'block', 'none']}
         >
-          <MdHome
+          <MdOutlineHome
+              className='btn'
               size={36}
               color='#B3B3B3'
             />
@@ -48,7 +49,8 @@ const index = () => {
         <Box
           display={['none', 'none', 'block']}
         >
-          <MdHome
+          <MdOutlineHome
+              className='btn'
               size={30}
               color='#B3B3B3'
             />
@@ -62,6 +64,7 @@ const index = () => {
             display={['none', 'block', 'none']}
           >
             <MdSearch
+                className='btn'
                 size={36}
                 color='#B3B3B3'
               />
@@ -71,6 +74,7 @@ const index = () => {
             display={['none', 'none', 'block']}
           >
             <MdSearch
+                className='btn'
                 size={30}
                 color='#B3B3B3'
               />
@@ -96,7 +100,8 @@ const index = () => {
         <Box
           display={['none', 'block', 'none']}
         >
-          <MdFavorite
+          <MdOutlineFavoriteBorder
+              className='btn'
               size={36}
               color='#B3B3B3'
             />
@@ -105,7 +110,8 @@ const index = () => {
         <Box
           display={['none', 'none', 'block']}
         >
-          <MdFavorite
+          <MdOutlineFavoriteBorder
+              className='btn'
               size={30}
               color='#B3B3B3'
             />
@@ -118,7 +124,8 @@ const index = () => {
         <Box
             display={['none', 'block', 'none']}
           >
-            <MdLibraryMusic
+            <MdOutlineLibraryMusic
+                className='btn'
                 size={36}
                 color='#B3B3B3'
               />
@@ -127,7 +134,8 @@ const index = () => {
           <Box
             display={['none', 'none', 'block']}
           >
-            <MdLibraryMusic
+            <MdOutlineLibraryMusic
+                className='btn'
                 size={30}
                 color='#B3B3B3'
               />
@@ -141,6 +149,7 @@ const index = () => {
             display={['none', 'block', 'none']}
           >
             <MdAdd
+                className='btn'
                 size={36}
                 color='#B3B3B3'
               />
@@ -150,6 +159,7 @@ const index = () => {
             display={['none', 'none', 'block']}
           >
             <MdAdd
+                className='btn'
                 size={30}
                 color='#B3B3B3'
               />

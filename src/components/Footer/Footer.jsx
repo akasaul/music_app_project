@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
-import { MdHome, MdLibraryMusic, MdOutlineLibraryBooks, MdOutlineSearch } from "react-icons/md";
+import { MdHome, MdLibraryMusic, MdOutlineSearch } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { Button, Flex, Text } from "rebass";
-import { buttonStyle, color, fontSize} from "styled-system";
+import { buttonStyle, color} from "styled-system";
 
 const Footer = () => {
   const Footer = styled(Flex)`
@@ -18,9 +18,13 @@ const Footer = () => {
     ${buttonStyle}
   `;
 
-  const IconText = styled(Text)`
-    ${fontSize}
-  `;
+
+  const navigate = useNavigate();
+
+
+  const handleClick = (link) => {
+    navigate(link);
+  }
 
   return (
     <Footer
@@ -31,6 +35,7 @@ const Footer = () => {
       display={['flex', 'none']}
     >
       <IconButton
+        onClick={() => handleClick('/')}
         variant='iconButton'
       >
         <MdHome size={28} />
@@ -42,6 +47,7 @@ const Footer = () => {
       </IconButton>
 
       <IconButton
+        onClick={() => handleClick('/search')}
         variant='iconButton'
       >
         <MdOutlineSearch size={28} />
@@ -54,6 +60,7 @@ const Footer = () => {
 
       <IconButton
         variant='iconButton'
+        onClick={() => handleClick('/library')}
       >
         <MdLibraryMusic size={28} />
         <Text

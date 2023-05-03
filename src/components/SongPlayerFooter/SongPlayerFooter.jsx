@@ -1,9 +1,10 @@
 import styled from "@emotion/styled"
 import { useState } from "react";
-import { MdClose, MdExpandLess, MdExpandMore, MdFavorite, MdFavoriteBorder, MdMore, MdOutlineFavorite, MdOutlinePlayArrow, MdPause, MdPlayArrow, MdPlayCircle, MdSkipNext, MdSkipPrevious } from "react-icons/md";
+import { MdClose, MdEdit, MdExpandLess, MdExpandMore, MdFavorite, MdFavoriteBorder, MdMore, MdOutlineFavorite, MdOutlinePlayArrow, MdPause, MdPlayArrow, MdPlayCircle, MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Box, Button, Flex, Text } from "rebass"
-import { display, fontSize, position } from "styled-system";
+import { color, display, fontSize, position } from "styled-system";
 import { Image } from "theme-ui";
 import { stopSong } from "../../app/features/song/songSlice";
 import { setFavs, setFavsReq } from "../../app/features/user/userSlice";
@@ -47,6 +48,18 @@ const SongPlayerFooter = () => {
     ${fontSize}
   `;
 
+  const EditSongText = styled(Text)`
+      ${color}
+      cursor: pointer;
+      display: flex;
+      alignItems: center;
+      gap: 1rem;
+
+      &:hover {
+        color: #fff;
+      } 
+  `
+
   const [ play, setPlay ] = useState(true);
   const [openModal, setOpenModal] = useState(false);
 
@@ -57,6 +70,7 @@ const SongPlayerFooter = () => {
 
 
   const { song, isPlaying } = useSelector(state => state.song);
+  const navigate = useNavigate();
 
   const SongInfo = styled(Flex)`
     width: 100%;
@@ -84,6 +98,9 @@ const SongPlayerFooter = () => {
     dispatch(stopSong());
   }
 
+  const handleEditSong = () => {
+    navigate(`/edit-song?id=${song.id}&&imageUrl=${song.imageUrl}&&title=${song.title}&&artist=${song.artist}&&album=${song.album}&&duration=${song.duration}`)
+  }
 
   return (
     <>
@@ -297,6 +314,22 @@ const SongPlayerFooter = () => {
                 Genre: {song.genre}
               </Text>
             </Box>
+
+            <Box
+              sx={{marginLeft: '2rem'}}
+            >
+              <EditSongText
+                onClick={handleEditSong}
+                color='textSecondary'
+                sx={{
+                  fontSize: '14px',
+                }}
+              >
+                Edit Song <MdEdit />
+              </EditSongText>
+
+            </Box>
+
           </SongInfo>
         }
 

@@ -8,6 +8,7 @@ import { Box, Flex, Image, Link, Text } from "rebass";
 import { color, fontSize, fontWeight } from "styled-system";
 import { Spinner } from "theme-ui";
 import { getAllReq } from "../../app/features/song/songSlice";
+import { auth } from "../../firebase/firebase";
 import useAuthStatus from "../../hooks/useAuthStatus"
 import BaseCard from "../BaseCard";
 import Slider from "../slider/Slider";
@@ -110,7 +111,7 @@ const FavoritesSection = () => {
       }
 
       {
-        isLoggedIn &&
+        isLoggedIn && favs.length !== 0 &&
           <Slider songs={songs.filter(song => favs.includes(song.id))}/>
       }
       

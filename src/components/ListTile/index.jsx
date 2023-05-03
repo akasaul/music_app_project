@@ -1,12 +1,13 @@
 import { Flex, Text } from "theme-ui"
 import { color, display, fontWeight } from "styled-system";
 import styled from "@emotion/styled";
-import { MdHome, MdMore } from "react-icons/md";
-import { Button, Link } from "rebass";
-import { useNavigate } from "react-router-dom";
+import {  Link } from "rebass";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 const ListTile = ({text, link, children}) => {
+
+  const location = useLocation();
 
   const TileText = styled(Text)`
   ${color}
@@ -41,7 +42,7 @@ const ListTile = ({text, link, children}) => {
 
       <ListTile
           alignItems='center'
-          className='list_tile'
+          className={`list_tile ${location.pathname === link && 'active'}`}
           sx={{
             gap: '10px'
           }}

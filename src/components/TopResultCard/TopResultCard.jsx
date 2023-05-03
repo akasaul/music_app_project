@@ -15,6 +15,7 @@ const TopResultCard  = ({title, imageUrl, artist, album, duration, genre, id}) =
     gap: 20px;
     border-radius: 7px;
     position: relative;
+    height: 300px;
     &:hover {
       background: #282828;
       cursor: pointer;

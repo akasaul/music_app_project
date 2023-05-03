@@ -12,6 +12,7 @@ import useAuthStatus from '../../hooks/useAuthStatus';
 import { Spinner } from "theme-ui";
 import { useDispatch } from 'react-redux';
 import { signOut } from '../../app/features/auth/authSlice';
+import { auth } from '../../firebase/firebase';
 
 const Header = () => {
   const  HeaderText = styled(Box)``;
@@ -21,6 +22,15 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const RightContainer = styled(Box)``;
+
+  const ProfileContainer = styled(Box)`
+    background: #1ED760;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+  `;
 
   // Toggle Login Page
   const [isLogin, setIsLogin] = useState(false);
@@ -40,6 +50,7 @@ const Header = () => {
   const Logout = () => {
     dispatch(signOut());
   }
+
 
   return (
     <Box
@@ -69,15 +80,18 @@ const Header = () => {
           <MdOutlineNotifications
             color='white'
             size={30}
+            className='header_btn'
           />
-          <MdOutlineAlarm
-            color='white'
-            size={30}
-          />
+
+          <ProfileContainer>
+              {auth.currentUser.displayName[0]}
+          </ProfileContainer>
+
           <MdLogout
             onClick={Logout}
             color='white'
             size={30}
+            className='header_btn'
           />
         </RightContainer> :
         isChecking && !isLoggedIn ?

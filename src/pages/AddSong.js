@@ -170,8 +170,10 @@ const AddSong = ({isEdit}) => {
 
   return (
     <Box
+      className='home'
       sx={{
-        width: '100%'
+        width: '100%',
+        marginTop: '1rem'
       }}
     >
       {
@@ -261,7 +263,7 @@ const AddSong = ({isEdit}) => {
             gap: '10px',
             flexDirection: 'column',
             marginInline: 'auto',
-            marginTop: '9rem'
+            marginTop: isEdit ? '2rem' : '9rem'
           }}
           >
 

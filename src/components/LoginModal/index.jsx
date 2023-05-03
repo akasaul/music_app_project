@@ -202,8 +202,12 @@ const Container = styled(Flex)`
     </Overlay>
     
       <Modal
-        left={['50px',   '50px', '20%']}
-        right={['50px', '50px', '20%']}
+        left={['20px',   '20px', '40px']}
+        right={['20px', '20px', '40px']}
+        maxWidth={['auto', 'auto', 'auto', '800px']}
+        sx={{
+          marginInline: 'auto'
+        }}
       >
         <Header
           as='header'
@@ -360,7 +364,6 @@ const Container = styled(Flex)`
           ></BottomText>
 
         </Flex>
-
 
         <Box>
           <Label

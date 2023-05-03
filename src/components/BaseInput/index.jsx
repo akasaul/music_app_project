@@ -11,7 +11,7 @@ const BaseInputWrapper = ({children}) => {
       alignItems='center'
       bg='inputBg'
       p='5px'
-      width={['250px', '250px', '350px', '400px']}
+      width={['250px', '325px', '350px', '400px']}
       >
       {children}
     </Container>
