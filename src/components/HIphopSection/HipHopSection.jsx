@@ -4,7 +4,7 @@ import { MdArrowCircleLeft, MdArrowForward, MdReadMore } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSnapCarousel } from "react-snap-carousel";
-import { Box, Flex, Image, Link, Text } from "rebass";
+import { Box, Flex, Image, Text } from "rebass";
 import { color, fontSize, fontWeight } from "styled-system";
 import { Spinner } from "theme-ui";
 import { getAllReq } from "../../app/features/song/songSlice";
@@ -12,11 +12,12 @@ import useAuthStatus from "../../hooks/useAuthStatus"
 import BaseCard from "../BaseCard";
 import Slider from "../slider/Slider";
 
-const FavoritesSection = () => {
+const HiphopSection = () => {
 
 
   const {isChecking, isLoggedIn} = useAuthStatus();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getAllReq());
@@ -24,8 +25,6 @@ const FavoritesSection = () => {
 
   const { songs } = useSelector(state => state.song);
   const { favs } = useSelector(state => state.user);
-  const navigate = useNavigate();
-
 
   if(isChecking) {
     return <Box>
@@ -42,7 +41,7 @@ const FavoritesSection = () => {
   const Title = styled(Text)`
   ${fontSize}
   ${fontWeight}
-  ${color}
+  ${color}  
     fontSize: 24px;
     margin-block: 1rem;
   `;
@@ -74,49 +73,32 @@ const FavoritesSection = () => {
     <Box>
       
       <Header>
+
         <Title
           fontSize='md'
           fontWeight='700'
           color={'textPrimary'}
         >
-          Songs You Like
+          All Out HipHop
         </Title>
 
         <More
           color='secondary'
           onClick={handleClick}
         >
-            See All
+          See All
           <MdArrowForward />
         </More>
       
       </Header>
 
       {
-        favs.length === 0 &&
-        <Flex
-          alignItems={'center'}
-          sx={{gap: '20px'}}
-        >
-          <Image
-            src={'https://cdn-icons-png.flaticon.com/512/408/408697.png?w=740&t=st=1683050602~exp=1683051202~hmac=b2742b98226da86801474ffa532a4b203cb68486ee2fb1780eba6c9275272bf9'}
-            height={'80px'}
-          />
-          <Text
-            sx={{color: '#fff'}}
-          >You have no favorites</Text>
-        </Flex>
-
-      }
-
-      {
         isLoggedIn &&
-          <Slider songs={songs.filter(song => favs.includes(song.id))}/>
+          <Slider songs={songs.filter(song => song?.genre?.toLowerCase()?.includes('hiphop'))}/>
       }
-      
 
     </Box>
   )
 }
 
-export default FavoritesSection
+export default HiphopSection

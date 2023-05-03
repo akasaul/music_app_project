@@ -5,6 +5,7 @@ import FavoritesSection from '../components/FavoritesSection/FavoritesSection';
 import styled from '@emotion/styled';
 import { color } from 'styled-system';
 import '../App.css';
+import HiphopSection from '../components/HIphopSection/HipHopSection';
 
 const Home = () => {
 
@@ -28,6 +29,7 @@ const Home = () => {
       <NavBar />
       <RecentSongs />
       <FavoritesSection />
+      <HiphopSection />
     </Home>
   )
 }

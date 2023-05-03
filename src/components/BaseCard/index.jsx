@@ -13,7 +13,7 @@ const BaseCard = ({title, imageUrl, artist, id, album, duration, genre}) => {
     border-radius: 7px;
     &:hover {
       cursor: pointer;
-      border: 1px solid green;
+      outline: 2px solid green;
       background: #181818;
       transition: 200 all ease;
     }

@@ -21,9 +21,11 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
+    "react-snap-carousel": "^0.3.1",
     "rebass": "^4.0.7",
     "redux-saga": "^1.2.3",
     "styled-system": "^5.1.5",
+    "swiper": "^9.2.4",
     "theme-ui": "^0.15.7",
     "web-vitals": "^2.1.4"
   },

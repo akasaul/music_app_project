@@ -18,7 +18,12 @@ select:-webkit-autofill {
 
 .search-result >  ::-webkit-scrollbar { 
     display: none;  
-  }
+}
+
+.slider  ::-webkit-scrollbar { 
+    display: none;  
+}
+
 
 .search-result {
   -ms-overflow-style: none; 
@@ -54,6 +59,34 @@ select:-webkit-autofill {
 
 .list_tile > * {
   color: #fff;
+}
+
+.page_index, .slider_btn {
+  border: none;
+  outline: none;
+  margin-inline: 10px;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background: #303030;
+}
+
+.slider_btn {
+  background: #1ED760;
+  color: #fff;
+  height: 20px;
+  width: 20px;
+}
+
+.slider_controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.slide_marker::marker {
+  display: none;
 }
 
 @media (min-width: 600px) {

@@ -128,6 +128,7 @@ const songSlice = createSlice({
     editSongSuccess: (state, action) => {
       state.song = action.payload;
       state.isLoading = false;
+      state.isSuccess = true;
     },
 
     editSongFailure: (state) => {

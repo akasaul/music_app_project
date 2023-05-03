@@ -146,6 +146,7 @@ const SongPlayerFooter = () => {
         display={['none', 'none','flex']}
         sx={{
           height: expand ? '125px' : '80px',
+          zIndex: 10  
         }}
       >
 
