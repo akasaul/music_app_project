@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { MdClose, MdSearch } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Flex, Text } from "rebass"
+import { Box, Flex, Image, Text } from "rebass"
 import { Container, Input, Spinner } from "theme-ui"
-import { getAllReq } from "../app/features/song/songSlice";
+import { getAllReq, reset, searchSong } from "../app/features/song/songSlice";
 import SongTile from "../components/SongTile/SongTile";
 import TopResultCard from '../components/TopResultCard/TopResultCard'
 
 const Search = () => {
 
   const dispatch = useDispatch();
-  const { songs, isLoading, currentState, isSuccess } = useSelector(state => state.song);
+  const { songs, isLoading, currentState, isSuccess, searchResults } = useSelector(state => state.song);
 
   useEffect(() => {
+      dispatch(reset());
       dispatch(getAllReq());
   }, [dispatch])
   
@@ -21,6 +22,7 @@ const Search = () => {
 
   const handleChange = (e) => {
     setQuery(e.target.value);
+    dispatch(searchSong(query));
   }
 
   return (
@@ -73,7 +75,7 @@ const Search = () => {
       }
 
       {
-          isSuccess &&
+          isSuccess && query &&
           <Flex
             flexDirection={['column', 'column', 'column', 'row']}
             style={{
@@ -95,9 +97,9 @@ const Search = () => {
               </Text>
 
               <TopResultCard  
-                artist={songs[0]?.artist}
-                imageUrl={songs[0]?.imageUrl}
-                title={songs[0]?.title} key={songs[0]?.id}
+                artist={searchResults[0]?.artist}
+                imageUrl={searchResults[0]?.imageUrl}
+                title={searchResults[0]?.title} key={searchResults[0]?.id}
               />
             </Box>
 
@@ -112,7 +114,7 @@ const Search = () => {
                 style={{color: 'white'}}
               >Songs</h2>
               {
-                songs.map(({imageUrl, artist, title, album, duration, id}, index) => <SongTile 
+                searchResults.slice(1, 6).map(({imageUrl, artist, title, album, duration, id}, index) => <SongTile 
                   imageUrl={imageUrl} 
                   artist={artist}
                   title={title}
@@ -120,13 +122,25 @@ const Search = () => {
                   duration={duration}
                   id={id}
                   index={index}
-                  key={id}
+                  key={id +  Math.random() * 100}
                   isSearch={true}
                 />)
               }
             </Box>
 
           </Flex>
+      }
+      {
+        !query &&
+        <Box
+          sx={{display: 'grid', placeContent: 'center', marginTop: '2rem'}}
+        >
+            <Image
+              height={'150px'} 
+              src={'https://cdn-icons-png.flaticon.com/512/408/408697.png?w=740&t=st=1683050602~exp=1683051202~hmac=b2742b98226da86801474ffa532a4b203cb68486ee2fb1780eba6c9275272bf9'} 
+            />
+            <h4 style={{color: '#fff', textAlign: 'center'}}>Search songs..</h4>
+        </Box>
       }
     </Box>
   )

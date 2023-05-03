@@ -1,6 +1,6 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { fetchRecentFailure, fetchRecentSuccess, getAllFailure, getAllSuccess } from '../../features/song/songSlice';
-import { db } from '../../../firebase/firebase';
+import { auth, db } from '../../../firebase/firebase';
 import { collection, getDocs, limit, orderBy, query, where } from 'firebase/firestore';
 
 // Worker function
@@ -13,8 +13,9 @@ function* workGetAll () {
     let songs = [];
 
     songsSnapshot.forEach((doc) => {
-      songs.push({id: doc.id, ...doc.data()});
+      songs.push({id: doc.id, ...doc.data(), postedBy: doc.data().postedBy.id});
     })
+
 
     yield put(getAllSuccess(songs));    
 

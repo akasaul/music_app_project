@@ -6,7 +6,6 @@ const songSlice = createSlice({
   initialState: {
     songs: [],
     recents: [],
-    searchResult: [],
     song: null,
     query: '',
     isLoading: false,
@@ -16,6 +15,8 @@ const songSlice = createSlice({
     currentState: '',
     isPlaying: false,
     songId: null,
+    fetchRecentState: '',
+    searchResults: [],
   },
   reducers: {
 
@@ -65,7 +66,7 @@ const songSlice = createSlice({
     // Fetch recently created songs 
     fetchRecentRequest: (state, action) => {
       state.isLoading = true;
-      state.currentState = 'FETCH_RECENT';
+      state.fetchRecentState = 'FETCH_RECENT';
     },
 
     fetchRecentSuccess: (state, action) => {
@@ -108,7 +109,7 @@ const songSlice = createSlice({
 
     getAllSuccess: (state, action) => {
       state.songs = action.payload;
-      state.searchResult = action.payload;
+      state.searchResults = action.payload;
       state.isLoading = false;
       state.isSuccess = true;
     },
@@ -151,9 +152,22 @@ const songSlice = createSlice({
       state.songs = action.payload;
     },
 
+    // Song Search 
+    searchSong: (state, action) => {
+      let query = action.payload.toLowerCase();
+      const res = state.songs.filter(song => (
+        song.title.toLowerCase().includes(query) ||
+        song.album.toLowerCase().includes(query) ||
+        song.artist.toLowerCase().includes(query) ||
+        song.genre.toLowerCase().includes(query)
+      ));
+
+      state.searchResults = [...res, ...state.songs].slice(0, 6);
+    }
+
   },
 });
 
-export const { searchRequest, searchRequestFailure, setSearchQuery, searchRequestSuccess, reset, addSongFailure, addSongRequest, addSongSuccess, setSong, fetchRecentFailure, fetchRecentRequest, fetchRecentSuccess, playSong, stopSong, getAllFailure, getAllReq, getAllSuccess, editSongFailure, editSongReq, editSongSuccess, deleteSongFailure, deleteSongReq, deleteSongSuccess } = songSlice.actions;
+export const { searchRequest, searchRequestFailure, setSearchQuery, searchRequestSuccess, reset, addSongFailure, addSongRequest, addSongSuccess, setSong, fetchRecentFailure, fetchRecentRequest, fetchRecentSuccess, playSong, stopSong, getAllFailure, getAllReq, getAllSuccess, editSongFailure, editSongReq, editSongSuccess, deleteSongFailure, deleteSongReq, deleteSongSuccess, searchSong } = songSlice.actions;
 
 export default songSlice.reducer;

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Box, Flex } from "rebass";
 import { Grid, Spinner } from "theme-ui";
 import SongCard from "../SongCard";
-import { fetchRecentRequest } from "../../app/features/song/songSlice";
+import { fetchRecentRequest, reset } from "../../app/features/song/songSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const RecentSongs = () => {
@@ -21,10 +21,11 @@ const RecentSongs = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(reset());
     dispatch(fetchRecentRequest());
   }, [dispatch]);
 
-  const { recents, isLoading, isError, currentState  } = useSelector(state => state.song);
+  const { recents, isLoading, isError, currentState, fetchRecentState, isSuccess  } = useSelector(state => state.song);
 
   return (
     <Flex
@@ -37,7 +38,7 @@ const RecentSongs = () => {
       <RecentGrid
       >
         {
-          isLoading && currentState === 'FETCH_RECENT' ?
+          isLoading && fetchRecentState === 'FETCH_RECENT' ?
           <Box
             height='100px'
             width='100%'
@@ -48,13 +49,13 @@ const RecentSongs = () => {
           >
               <Spinner color='green' />
           </Box>
-           : isError && currentState === 'FETCH_RECENT' ? 
+           : isError && fetchRecentState === 'FETCH_RECENT' ? 
            <h5 
             style={{
               color: 'white'
             }}
            >An Error Occurred</h5>
-           :
+           : isSuccess && fetchRecentState === 'FETCH_RECENT' &&
           recents?.map(recent => 
             <SongCard key={recent.id} id={recent.id} artist={recent.artist} imageUrl={recent.imageUrl} title={recent.title} album={recent.album} 
               duration={recent.duration} genre={recent.genre}

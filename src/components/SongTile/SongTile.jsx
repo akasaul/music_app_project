@@ -7,12 +7,13 @@ import { Box, Button, Flex, Image, Text } from 'rebass';
 import { color, flex, fontFamily, fontSize, fontWeight } from 'styled-system';
 import { deleteSongReq, playSong } from '../../app/features/song/songSlice';
 import { setFavsReq } from '../../app/features/user/userSlice';
+import { auth } from '../../firebase/firebase';
 import useAuthStatus from '../../hooks/useAuthStatus';
 import { formatTime } from '../../utils/formatTime';
 import LoginModal from '../LoginModal';
 import './SongTile.css';
 
-const SongTile = ({imageUrl, title, duration, artist, album, index, id, isSearch, genre}) => {
+const SongTile = ({imageUrl, title, duration, artist, album, index, id, isSearch, genre, postedBy}) => {
   const Tile  = styled(Flex)`
     border-radius: 5px;
     justify-content: space-between;
@@ -186,43 +187,45 @@ const SongTile = ({imageUrl, title, duration, artist, album, index, id, isSearch
         {time}
       </Time>
 
-      <button
-        className='more'
-        onClick={toggleOption}
-      >
-        <MdMoreVert 
-          color='white'
-        />
-      </button>
+      {
+        isLoggedIn &&
+          <button
+            className='more'
+            onClick={toggleOption}
+          >
+            <MdMoreVert 
+              color='white'
+            />
+          </button>
+      }
 
       {
         showOption &&
         <Box className='more_options'>
+            <ListButton
+              color='white'
+              display='flex'
+              justifyContent='space-between'
+              onClick={editItem}
+            >
+              <Text>
+                Edit
+              </Text>
 
-          <ListButton
-            color='white'
-            display='flex'
-            justifyContent='space-between'
-            onClick={editItem}
-          >
-            <Text>
-              Edit
-            </Text>
+              <MdEdit />
+            </ListButton>
+            <ListButton
+              color='white'
+              display='flex'
+              justifyContent='space-between'
+              onClick={deleteItem}
+            >
+              <Text>
+                Delete
+              </Text>
 
-            <MdEdit />
-          </ListButton>
-          <ListButton
-            color='white'
-            display='flex'
-            justifyContent='space-between'
-            onClick={deleteItem}
-          >
-            <Text>
-              Delete
-            </Text>
-
-            <MdDelete />
-          </ListButton>
+              <MdDelete />
+            </ListButton>
         </Box>
       }
 

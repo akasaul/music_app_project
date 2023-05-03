@@ -14,9 +14,14 @@ const TopResultCard  = ({title, imageUrl, artist, album, duration, genre, id}) =
     flex-direction: column;
     gap: 20px;
     border-radius: 7px;
+    position: relative;
     &:hover {
       background: #282828;
       cursor: pointer;
+    }
+
+    &:hover .play_button_result {
+      display: grid;
     }
   `;
 
@@ -34,15 +39,22 @@ const TopResultCard  = ({title, imageUrl, artist, album, duration, genre, id}) =
   ${color}
   border-radius: 50%;
   position: absolute;
-  right: 1rem;
+  right: 50px;
+  bottom: 50px;
+  display: none;
+
+  &:hover {
+    transform: scale(110%); 
+    transition: all 200 ease-in-out;
+    cursor: pointer;
+  }
   `
 
   const dispatch = useDispatch();
 
-const startPlay = () => {
-  dispatch(playSong({title, artist, imageUrl, album, duration, genre, id}));
-}
-
+  const startPlay = () => {
+    dispatch(playSong({title, artist, imageUrl, album, duration, genre, id}));
+  }
 
   return (
     <TopCard
@@ -51,6 +63,7 @@ const startPlay = () => {
       color='textPrimary'
       p='25px'
       bg='cardDark'
+      position='relative'
       >
       <Image 
         height='120px'
@@ -84,19 +97,14 @@ const startPlay = () => {
 
 
       <PlayButton
-        width={['30px', '30px', '40px']}
-        height={['30px', '30px', '40px']}
+        width={['40px', '40px', '50px']}
+        height={['40px', '40px', '50px']}
         bg='secondary'
-        display={['none']}
-        className='play_button'
+        sx={{placeContent: 'center'}}
+        className='play_button_result'
         onClick={startPlay}
-        
-        sx={{
-          opacity: 0,
-          placeContent: 'center',
-          boxShadow: '5px 5px 10px #000'
-        }}
-      >
+
+        >
         <MdPlayArrow 
           color='black'
           size={40} 

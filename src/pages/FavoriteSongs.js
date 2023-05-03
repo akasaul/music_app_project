@@ -8,6 +8,7 @@ import SongTile from "../components/SongTile/SongTile";
 import '../App.css';
 import useAuthStatus from "../hooks/useAuthStatus";
 import { MdAccountCircle } from "react-icons/md";
+import { Spinner } from "theme-ui";
 
 const FavoriteSongs = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const FavoriteSongs = () => {
     dispatch(getAllReq());
   }, [dispatch]);
 
-  const { songs } = useSelector(state => state.song);
+  const { songs, isLoading, currentState, isSuccess } = useSelector(state => state.song);
   const { favs } = useSelector(state => state.user);
   const {isLoggedIn} = useAuthStatus();
 
@@ -82,8 +83,22 @@ const FavoriteSongs = () => {
         >
           Songs you May Like
         </HeaderText>
-
         {
+          isLoading && currentState === 'GET_ALL' ?
+          <Box
+            height='200px'
+            width='100%'
+            display='grid'
+            sx={{
+              placeContent: 'center'
+            }}
+
+            >
+            <Spinner 
+              color='green'
+            />
+          </Box>
+           : 
           songs.map((song, index) => 
             <SongTile imageUrl={song.imageUrl} title={song.title} index={index}
               duration={song.duration} artist={song.artist} album={song.album}
