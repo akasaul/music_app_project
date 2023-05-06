@@ -1,6 +1,6 @@
 import './header.css';
 import { Box, Button, Flex, Heading, Image, Text } from "rebass";
-import {  MdOutlineNotifications, MdOutlineAlarm, MdOutlineSettings, MdOutlineLogin, MdLogout } from 'react-icons/md';
+import {  MdOutlineNotifications, MdOutlineAlarm, MdOutlineSettings, MdOutlineLogin, MdLogout, MdOutlineHdrPlus, MdAdd } from 'react-icons/md';
 import styled from '@emotion/styled';
 import { fontSize, fontWeight, variant } from 'styled-system';
 import PrimaryButton from '../Buttons/PrimaryButton';
@@ -13,7 +13,7 @@ import { Spinner } from "theme-ui";
 import { useDispatch } from 'react-redux';
 import { signOut } from '../../app/features/auth/authSlice';
 import { auth } from '../../firebase/firebase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Header = ({isHome}) => {
   const  HeaderText = styled(Box)``;
@@ -109,11 +109,13 @@ const Header = ({isHome}) => {
           minWidth='130px'
           justifyContent='space-between'
         >
-          <MdOutlineNotifications
-            color='white'
-            size={30}
-            className='header_btn'
-          />
+          <Link to='/add-song'>
+            <MdAdd
+              color='white'
+              size={30}
+              className='header_btn'
+            />
+          </Link>
 
           <ProfileContainer>
               {auth.currentUser?.displayName?.at(0)?.toUpperCase()}
